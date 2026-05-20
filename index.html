@@ -12,6 +12,8 @@
             --dark: #212121;
             --light: #f8f9fa;
             --warning: #f57c00;
+            --info: #0288d1;
+            --purple: #6a1b9a;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,8 +47,7 @@
             padding: 3px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .header-text { text-align: left; }
-        .header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; }
+        .header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; }
         .header p { margin: 8px 0 0 0; opacity: 0.85; font-size: 1rem; }
          
         .nav-tabs {
@@ -65,7 +66,6 @@
             border-radius: 30px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .tab-btn.active {
             background-color: var(--primary);
@@ -81,6 +81,30 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ৫-স্তরের আর্থিক ড্যাশবোর্ড গ্রিড */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-align: center;
+            border-bottom: 4px solid #ccc;
+        }
+        .stat-card h4 { margin: 0; font-size: 0.95rem; color: #666; font-weight: 600; }
+        .stat-card h2 { margin: 8px 0 0 0; font-size: 1.6rem; font-weight: 700; }
+        
+        .c-total { border-bottom-color: var(--secondary); color: var(--secondary); background: #e8f5e9; }
+        .c-expense { border-bottom-color: var(--accent); color: var(--accent); background: #ffebee; }
+        .c-invest { border-bottom-color: var(--purple); color: var(--purple); background: #f3e5f5; }
+        .c-profit { border-bottom-color: var(--info); color: var(--info); background: #e1f5fe; }
+        .c-remains { border-bottom-color: var(--warning); color: #e65100; background: #fff3e0; }
+
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -93,11 +117,8 @@
             border-radius: 14px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.04);
             border-top: 4px solid var(--primary);
-            transition: transform 0.3s;
         }
-        .card:hover { transform: translateY(-2px); }
         .card h3 { margin-top: 0; margin-bottom: 20px; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.2rem; }
-        .card.expense-card { border-top-color: var(--accent); }
 
         table {
             width: 100%;
@@ -106,70 +127,53 @@
             background: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
-        th, td {
-            padding: 14px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
+        th, td { padding: 14px; text-align: center; border-bottom: 1px solid #eee; }
         th { background-color: var(--primary); color: white; font-weight: 600; }
         tr:hover { background-color: #f9f9f9; }
 
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 7px; font-weight: 600; color: #444; font-size: 0.95rem; }
-        input, select, textarea {
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 0.95rem; }
+        input, select {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             box-sizing: border-box;
             border: 1px solid #dcdcdc;
             border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s;
             background-color: #fafafa;
         }
-        input:focus, select:focus { border-color: var(--primary); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(27,94,32,0.1); }
-        .flex-inputs { display: flex; gap: 10px; }
+        input:focus, select:focus { border-color: var(--primary); outline: none; background-color: white; }
         
         button.btn-block {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            width: 100%; padding: 13px; background-color: var(--primary); color: white;
+            border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
         }
-        button.btn-block:hover { background-color: var(--secondary); box-shadow: 0 4px 12px rgba(46,125,50,0.2); }
+        button.btn-block:hover { background-color: var(--secondary); }
          
         .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
         .badge-pending { background-color: #fff3e0; color: var(--warning); }
         .badge-approved { background-color: #e8f5e9; color: var(--secondary); }
         .badge-rejected { background-color: #ffebee; color: var(--accent); }
 
-        .action-btn { padding: 6px 14px; margin: 2px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 600; transition: opacity 0.2s; }
-        .action-btn:hover { opacity: 0.9; }
+        .action-btn { padding: 6px 14px; margin: 2px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 600; }
         .btn-approve { background-color: #388e3c; }
         .btn-reject { background-color: #d32f2f; }
 
         .months-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 6px; margin-top: 5px; }
         .month-chip { font-size: 0.75rem; padding: 6px 2px; border-radius: 6px; text-align: center; font-weight: 600; color: white; }
-        .m-paid { background-color: #2e7d32; box-shadow: 0 2px 4px rgba(46,125,50,0.15); } 
-        .m-due { background-color: #c62828; box-shadow: 0 2px 4px rgba(198,40,40,0.15); }  
-        .m-na { background-color: #bdbdbd; color: #fff; }   
+        .m-paid { background-color: #2e7d32; } 
+        .m-due { background-color: #c62828; }  
+        .m-na { background-color: #bdbdbd; }   
 
-        .profile-card { display: flex; align-items: center; gap: 20px; background: #fafafa; padding: 20px; border-radius: 12px; border: 1px solid #eaeaea; margin-bottom: 15px; }
-        .profile-img-container { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid var(--primary); background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .profile-card { display: flex; align-items: center; gap: 20px; background: #fafafa; padding: 20px; border-radius: 12px; border: 1px solid #eaeaea; }
+        .profile-img-container { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid var(--primary); background: white; display: flex; align-items: center; justify-content: center; }
         .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
         .profile-info { flex-grow: 1; line-height: 1.7; }
-        .file-upload-btn { background: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; margin-top: 8px; display: inline-block; cursor: pointer; border: 1px dashed var(--primary); color: var(--primary); font-weight: 600; transition: all 0.2s; }
-        .file-upload-btn:hover { background: #e8f5e9; }
+        .file-upload-btn { background: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; margin-top: 8px; display: inline-block; cursor: pointer; border: 1px dashed var(--primary); color: var(--primary); font-weight: 600; }
         
         .stat-banner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; text-align: center; }
-        .stat-box { padding: 10px; border-radius: 8px; color: white; font-weight: bold; font-size: 0.95rem; }
+        .stat-box { padding: 8px; border-radius: 8px; color: white; font-weight: bold; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -177,9 +181,32 @@
 <div class="app-wrapper">
     <div class="header">
         <img src="https://i.ibb.co/bRVgN9vG/1000010448.jpg" alt="Logo">
-        <div class="header-text">
+        <div style="text-align: left;">
             <h1>আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী</h1>
             <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="stat-card c-total">
+            <h4>💰 মোট তহবিল জমা</h4>
+            <h2 id="pub-total-income">০ ৳</h2>
+        </div>
+        <div class="stat-card c-expense">
+            <h4>💸 মোট ব্যয়/খরচ</h4>
+            <h2 id="pub-total-expense">০ ৳</h2>
+        </div>
+        <div class="stat-card c-invest">
+            <h4>🏢 ব্যবসায় খাটানো</h4>
+            <h2 id="pub-total-invest">০ ৳</h2>
+        </div>
+        <div class="stat-card c-profit">
+            <h4>📈 ব্যবসায় লাভ</h4>
+            <h2 id="pub-total-profit">০ ৳</h2>
+        </div>
+        <div class="stat-card c-remains">
+            <h4>🏪 অবশিষ্ট ক্যাশ তহবিল</h4>
+            <h2 id="pub-total-remains">০ ৳</h2>
         </div>
     </div>
 
@@ -208,27 +235,12 @@
                 <div id="installment-form-content" style="display: none;">
                     <div class="form-group">
                         <label>কোন মাসের কিস্তি?</label>
-                        <div class="flex-inputs">
+                        <div style="display:flex; gap:10px;">
                             <select id="sub-month">
-                                <option value="জানুয়ারি">জানুয়ারি</option>
-                                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
-                                <option value="মার্চ">মার্চ</option>
-                                <option value="এপ্রিল">এপ্রিল</option>
-                                <option value="মে">মে</option>
-                                <option value="জুন">জুন</option>
-                                <option value="জুলাই">জুলাই</option>
-                                <option value="আগস্ট">আগস্ট</option>
-                                <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
-                                <option value="অক্টোবর">অক্টোবর</option>
-                                <option value="নভেম্বর">নভেম্বর</option>
-                                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                                <option value="জানুয়ারি">জানুয়ারি</option><option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option><option value="মার্চ">মার্চ</option><option value="এপ্রিল">এপ্রিল</option><option value="মে">মে</option><option value="জুন">জুন</option><option value="জুলাই">জুলাই</option><option value="আগস্ট">আগস্ট</option><option value="সেপ্টেম্বর">সেপ্টেম্বর</option><option value="অক্টোবর">অক্টোবর</option><option value="নভেম্বর">নভেম্বর</option><option value="ডিসেম্বর">ডিসেম্বর</option>
                             </select>
                             <select id="sub-year">
-                                <option value="২০২৪">২০২৪</option>
-                                <option value="২০২৫">২০২৫</option>
-                                <option value="২০২৬">২০২৬</option>
-                                <option value="২০২৭">২০২৭</option>
-                                <option value="২০২৮">২০২৮</option>
+                                <option value="২০২৪">২০২৪</option><option value="২০২৫">২০২৫</option><option value="২০২৬">২০২৬</option><option value="২০২৭">২০২৭</option><option value="২০২৮">২০২৮</option>
                             </select>
                         </div>
                     </div>
@@ -246,11 +258,9 @@
 
             <div class="card" style="grid-column: span 2;">
                 <h3>📊 আপনার প্রোফাইল ও কিস্তির বিবরণ</h3>
-                
                 <div id="personal-status-blank" style="color: #777; text-align: center; padding: 40px 0;">
-                    <p style="font-size: 1.1rem;">নাম সিলেক্ট করে সঠিক গোপন পিন দেওয়ার পর আপনার প্রোফাইল ও কিস্তির হিসাব এখানে প্রদর্শিত হবে।</p>
+                    <p style="font-size: 1.1rem;">নাম সিলেক্ট করে সঠিক গোপন পিন দেওয়ার পর আপনার লাইভ প্রোফাইল ও কিস্তির হিসাব এখানে প্রদর্শিত হবে।</p>
                 </div>
-                
                 <div id="personal-status-box" style="display: none;"></div>
 
                 <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
@@ -276,12 +286,7 @@
         <div style="overflow-x: auto;">
             <table>
                 <thead>
-                    <tr>
-                        <th>ক্রমিক</th>
-                        <th>পদবী</th>
-                        <th>নাম</th>
-                        <th>ঠিকানা</th>
-                    </tr>
+                    <tr><th>ক্রমিক নং</th><th>পদবী</th><th>নাম</th><th>ঠিকানা</th></tr>
                 </thead>
                 <tbody id="public-members-table"></tbody>
             </table>
@@ -299,47 +304,60 @@
 
         <div id="admin-content" style="display: none;">
             <div class="grid-3">
-                <div class="card" style="border-top-color: #2e7d32; background: #f1f8e9;">
-                    <h4 style="margin:0; color:#2e7d32;">💰 কেন্দ্রীয় মোট তহবিল</h4>
-                    <h2 id="adm-total-fund" style="color: var(--primary); margin:10px 0 0 0; font-size: 2rem;">০ ৳</h2>
-                </div>
-                <div class="card" style="border-top-color: var(--warning); background: #fff3e0;">
-                    <h4 style="margin:0; color:var(--warning);">⏳ পেন্ডিং রিকোয়েস্ট</h4>
-                    <h2 id="adm-pending-count" style="color: var(--warning); margin:10px 0 0 0; font-size: 2rem;">০ টি</h2>
-                </div>
-                <div class="card expense-card" style="background: #ffebee;">
-                    <h4 style="margin:0 0 10px 0; color:var(--accent);">💸 অন্যান্য খরচ এন্ট্রি</h4>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="text" id="exp-title" placeholder="বিবরণ">
-                        <input type="number" id="exp-amount" placeholder="টাকা" style="width: 100px;">
-                        <button onclick="addExpense()" style="background:var(--accent); color:white; border:none; padding:0 15px; border-radius:8px; cursor:pointer; font-weight: bold;">যোগ</button>
+                <div class="card" style="border-top-color: var(--accent);">
+                    <h3 style="color:var(--accent);">💸 ১. নতুন ব্যয়/খরচ এন্ট্রি</h3>
+                    <div class="form-group">
+                        <label>ব্যয়ের খাতের নাম/বিবরণ:</label>
+                        <input type="text" id="exp-title" placeholder="উদা: অফিস ভাড়া, খাতা ক্রয়">
                     </div>
+                    <div class="form-group">
+                        <label>ব্যয়ের পরিমাণ (টাকা):</label>
+                        <input type="number" id="exp-amount" placeholder="টাকার পরিমাণ">
+                    </div>
+                    <button class="btn-block" style="background-color:var(--accent);" onclick="addFinancialRecord('expense')">খরচ রেকর্ড করুন</button>
+                </div>
+
+                <div class="card" style="border-top-color: var(--purple);">
+                    <h3 style="color:var(--purple);">🏢 ২. ব্যবসায় খাটানো টাকা (ইনভেস্ট)</h3>
+                    <div class="form-group">
+                        <label>ব্যবসার নাম/প্রজেক্ট বিবরণ:</label>
+                        <input type="text" id="inv-title" placeholder="উদা: নতুন প্রজেক্ট ইনভেস্ট">
+                    </div>
+                    <div class="form-group">
+                        <label>খাটানো টাকার পরিমাণ:</label>
+                        <input type="number" id="inv-amount" placeholder="টাকার পরিমাণ">
+                    </div>
+                    <button class="btn-block" style="background-color:var(--purple);" onclick="addFinancialRecord('invest')">ইনভেস্ট এন্ট্রি করুন</button>
+                </div>
+
+                <div class="card" style="border-top-color: var(--info);">
+                    <h3 style="color:var(--info);">📈 ৩. ব্যবসায় লাভের পরিমাণ (প্রফিট)</h3>
+                    <div class="form-group">
+                        <label>কোন ব্যবসা হতে লাভ এসেছে:</label>
+                        <input type="text" id="prf-title" placeholder="উদা: প্রজেক্ট-১ এর লভ্যাংশ">
+                    </div>
+                    <div class="form-group">
+                        <label>লাভের পরিমাণ (টাকা):</label>
+                        <input type="number" id="prf-amount" placeholder="টাকার পরিমাণ">
+                    </div>
+                    <button class="btn-block" style="background-color:var(--info);" onclick="addFinancialRecord('profit')">লাভের ডাটা যোগ করুন</button>
                 </div>
             </div>
 
-            <div class="card" style="margin-bottom: 25px; border-top-color: #0288d1;">
+            <div class="card" style="margin-bottom: 25px; border-top-color: var(--info);">
                 <h3>🔍 সদস্য বিবরণী ও প্রোফাইল ট্র্যাকার (এডমিন ভিউ)</h3>
                 <div class="form-group" style="max-width: 400px;">
                     <label>যেকোনো সদস্যের বিবরণ দেখতে সিলেক্ট করুন:</label>
                     <select id="adm-member-select" onchange="loadAdminMemberView()"></select>
                 </div>
-                <div id="adm-member-profile-box" style="display: none; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                    </div>
+                <div id="adm-member-profile-box" style="display: none; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;"></div>
             </div>
 
             <h3>📥 সদস্যদের পাঠানো কিস্তির রিকোয়েস্টসমূহ (অনুমোদন পেন্ডিং)</h3>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
-                        <tr>
-                            <th>তারিখ</th>
-                            <th>সদস্যের নাম</th>
-                            <th>উদ্দেশ্য (মাস ও সাল)</th>
-                            <th>টাকার পরিমাণ</th>
-                            <th>রসিদ/Trx বিবরণ</th>
-                            <th>অবস্থা</th>
-                            <th>অ্যাকশন</th>
-                        </tr>
+                        <tr><th>তারিখ</th><th>সদস্যের নাম</th><th>উদ্দেশ্য (মাস ও সাল)</th><th>টাকার পরিমাণ</th><th>রসিদ/Trx বিবরণ</th><th>অবস্থা</th><th>অ্যাকশন</th></tr>
                     </thead>
                     <tbody id="admin-requests-table"></tbody>
                 </table>
@@ -349,13 +367,11 @@
 </div>
 
 <script>
-    // লোগো ইমেজ ইউআরএল
     const LOGO_URL = "https://i.ibb.co/bRVgN9vG/1000010448.jpg";
 
-    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং আপনার নির্ধারিত ২০+০১ থেকে ২০১০ পিন বিন্যাস
     const initialMembers = [
         { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", pin: "2001", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 2, name: "বোরহান উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "2002", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "2002", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
         { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", pin: "2003", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
         { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "2004", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
         { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "2005", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
@@ -368,43 +384,48 @@
 
     const ADMIN_PASSWORD = "287426"; 
      
-    let db_members = JSON.parse(localStorage.getItem('f_members'));
-    
-    // লোকালস্টোরেজ পিন রি-ভেরিফিকেশন ফিল্টার
-    if(!db_members || !db_members[0].hasOwnProperty('pin') || db_members[0].pin === "1111" || db_members[0].pin.startsWith("12")) {
-        db_members = initialMembers;
-        localStorage.setItem('f_members', JSON.stringify(db_members));
-    }
-    
+    let db_members = JSON.parse(localStorage.getItem('f_members')) || initialMembers;
     let db_requests = JSON.parse(localStorage.getItem('f_requests')) || [];
-    let db_expenses = JSON.parse(localStorage.getItem('f_expenses')) || 0;
+    
+    // নতুন ৩টি ফাইন্যান্সিয়াল ডেটাবেজ অ্যারে লজিক
+    let db_expenses_total = parseFloat(localStorage.getItem('f_expenses_total')) || 0;
+    let db_invest_total = parseFloat(localStorage.getItem('f_invest_total')) || 0;
+    let db_profit_total = parseFloat(localStorage.getItem('f_profit_total')) || 0;
 
     const allMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
 
     function saveDB() {
         localStorage.setItem('f_members', JSON.stringify(db_members));
         localStorage.setItem('f_requests', JSON.stringify(db_requests));
-        localStorage.setItem('f_expenses', JSON.stringify(db_expenses));
+        localStorage.setItem('f_expenses_total', db_expenses_total);
+        localStorage.setItem('f_invest_total', db_invest_total);
+        localStorage.setItem('f_profit_total', db_profit_total);
     }
 
-    // সংশোধন ১: পরিশোধিত মাস গণনার নিখুঁত লজিক
     function recalculateAllMembersSummary() {
         db_members.forEach(m => {
             let totalPaid = 0;
-            
-            // অনুমোদিত রিকোয়েস্ট থেকে ইউনিক মাসগুলো কাউন্ট করা হবে
             const approvedReqs = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
-            
-            approvedReqs.forEach(r => {
-                totalPaid += r.amount;
-            });
-
+            approvedReqs.forEach(r => { totalPaid += r.amount; });
             m.totalAmount = totalPaid;
-            m.paidMonths = approvedReqs.length; // যতটি মাস এডমিন অনুমোদন করেছেন ঠিক তত মাস
-
-            let totalExpectedMonthsToDate = 4 + (12 * 2); // সেপ্টেম্বর ২০২৪ থেকে বর্তমান মে ২০২৬ অব্দি মোট ২৮ মাস
+            m.paidMonths = approvedReqs.length;
+            let totalExpectedMonthsToDate = 4 + (12 * 2); // সেপ্টেম্বর ২০২৪ হতে আজ অব্দি মোট ২৮ মাস
             m.dueMonths = Math.max(0, totalExpectedMonthsToDate - m.paidMonths);
         });
+    }
+
+    function refreshFinancialDashboard() {
+        let totalIncome = db_members.reduce((sum, m) => sum + m.totalAmount, 0);
+        
+        // গাণিতিক সূত্র: অবশিষ্ট ক্যাশ = (মোট তহবিল + মোট লাভ) - (মোট খরচ + মোট খাটানো)
+        let remainsCash = (totalIncome + db_profit_total) - (db_expenses_total + db_invest_total);
+
+        // লাইভ টেক্সট পুশ
+        document.getElementById('pub-total-income').textContent = totalIncome + " ৳";
+        document.getElementById('pub-total-expense').textContent = db_expenses_total + " ৳";
+        document.getElementById('pub-total-invest').textContent = db_invest_total + " ৳";
+        document.getElementById('pub-total-profit').textContent = db_profit_total + " ৳";
+        document.getElementById('pub-total-remains').textContent = remainsCash + " ৳";
     }
 
     function switchTab(tabId) {
@@ -425,9 +446,7 @@
         if(pass === ADMIN_PASSWORD) {
             sessionStorage.setItem('admin_session', 'true');
             showAdminDashboard();
-        } else {
-            alert("ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।");
-        }
+        } else { alert("ভুল পাসওয়ার্ড!"); }
     }
 
     function showAdminDashboard() {
@@ -439,11 +458,10 @@
     function init() {
         recalculateAllMembersSummary();
         saveDB();
+        refreshFinancialDashboard();
 
-        // ইউজার ও এডমিন ড্রপডাউন লোড
         const select = document.getElementById('sub-member-id');
         const admSelect = document.getElementById('adm-member-select');
-        
         select.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
         admSelect.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
         
@@ -466,15 +484,8 @@
     function renderPublicTable() {
         const tbody = document.getElementById('public-members-table');
         tbody.innerHTML = '';
-        db_members.forEach((m, idx) => {
-            tbody.innerHTML += `
-                <tr>
-                    <td><b>${m.id}</b></td>
-                    <td><strong>${m.role}</strong></td>
-                    <td>${m.name}</td>
-                    <td><small style="color:#666;">${m.address}</small></td>
-                </tr>
-            `;
+        db_members.forEach((m) => {
+            tbody.innerHTML += `<tr><td><b>${m.id}</b></td><td><strong>${m.role}</strong></td><td>${m.name}</td><td><small style="color:#666;">${m.address}</small></td></tr>`;
         });
     }
 
@@ -487,10 +498,7 @@
         const reportBox = document.getElementById('personal-yearly-report');
         
         document.getElementById('sub-member-pin').value = '';
-        formContent.style.display = 'none';
-        statusBox.style.display = 'none';
-        reportBox.style.display = 'none';
-        statusBlank.style.display = 'block';
+        formContent.style.display = 'none'; statusBox.style.display = 'none'; reportBox.style.display = 'none'; statusBlank.style.display = 'block';
 
         if(id) { pinBox.style.display = 'block'; } else { pinBox.style.display = 'none'; }
     }
@@ -501,25 +509,21 @@
         const m = db_members.find(x => x.id === id);
 
         if(!m) return;
-
         if(inputPin === m.pin) {
             document.getElementById('pin-auth-box').style.display = 'none';
             document.getElementById('installment-form-content').style.display = 'block';
             
-            // মেম্বার নিজের ভিউ লোড করবে
-            const htmlContent = generateProfileHTML(m, true);
             document.getElementById('personal-status-blank').style.display = 'none';
-            document.getElementById('personal-status-box').innerHTML = htmlContent;
+            document.getElementById('personal-status-box').innerHTML = generateProfileHTML(m, true);
             document.getElementById('personal-status-box').style.display = 'block';
             generateYearlyCalendar(m, 'yearly-report-rows');
             document.getElementById('personal-yearly-report').style.display = 'block';
         } else {
-            alert("ভুল গোপন পিন কোড! আপনি অন্য সদস্যের তথ্য দেখতে পারবেন না।");
+            alert("ভুল গোপন পিন কোড!");
             document.getElementById('sub-member-pin').value = '';
         }
     }
 
-    // প্রোফাইল জেনারেটর কমন ফাংশন
     function generateProfileHTML(m, isUserView) {
         const hasPending = db_requests.filter(r => r.memberId === m.id && r.status === 'pending');
         const currentAvatar = m.image ? m.image : LOGO_URL;
@@ -527,14 +531,8 @@
         return `
             <div class="profile-card">
                 <div style="text-align:center;">
-                    <div class="profile-img-container">
-                        <img id="${isUserView ? 'avatar-preview' : 'adm-avatar-preview'}" src="${currentAvatar}" alt="Profile">
-                    </div>
-                    ${isUserView ? `
-                    <label class="file-upload-btn">
-                        📷 ছবি আপলোড
-                        <input type="file" id="profile-image-input" accept="image/*" style="display:none;" onchange="uploadProfilePicture(${m.id})">
-                    </label>` : ''}
+                    <div class="profile-img-container"><img id="${isUserView ? 'avatar-preview' : 'adm-avatar-preview'}" src="${currentAvatar}"></div>
+                    ${isUserView ? `<label class="file-upload-btn">📷 ছবি আপলোড<input type="file" id="profile-image-input" accept="image/*" style="display:none;" onchange="uploadProfilePicture(${m.id})"></label>` : ''}
                 </div>
                 <div class="profile-info">
                     <h3 style="margin:0; color:var(--primary); font-size:1.4rem;">${m.name}</h3>
@@ -550,7 +548,6 @@
         `;
     }
 
-    // ক্যালেন্ডার জেনারেটর কমন ফাংশন
     function generateYearlyCalendar(m, targetRowId) {
         const rowsContainer = document.getElementById(targetRowId);
         rowsContainer.innerHTML = '';
@@ -581,21 +578,16 @@
             rowsContainer.innerHTML += `
                 <tr>
                     <td><strong>${year}</strong></td>
-                    <td>
-                        <span style="color:green; font-weight:600;">${monthsPaidCount} পেইড</span><br>
-                        <span style="color:${monthsDueCount > 0 ? 'red' : 'green'}; font-weight:600;">${monthsDueCount} বকেয়া</span>
-                    </td>
+                    <td><span style="color:green; font-weight:600;">${monthsPaidCount} পেইড</span><br><span style="color:${monthsDueCount > 0 ? 'red' : 'green'}; font-weight:600;">${monthsDueCount} বকেয়া</span></td>
                     <td>${monthsHtml}</td>
                 </tr>
             `;
         });
     }
 
-    // সংশোধন ২: এডমিন কর্তৃক নির্দিষ্ট সদস্যের সম্পূর্ণ প্রোফাইল বিবরণী দেখা
     function loadAdminMemberView() {
         const id = parseInt(document.getElementById('adm-member-select').value);
         const container = document.getElementById('adm-member-profile-box');
-        
         if(!id) { container.style.display = 'none'; return; }
 
         const m = db_members.find(x => x.id === id);
@@ -607,13 +599,7 @@
                 <h4 style="color:var(--primary); margin-bottom:10px;">📅 সদস্যের কিস্তি ক্যালেন্ডার ভিউ</h4>
                 <div style="overflow-x: auto;">
                     <table>
-                        <thead>
-                            <tr style="background-color: var(--secondary); color:white;">
-                                <th style="width:15%">বছর</th>
-                                <th style="width:25%">অবস্থা</th>
-                                <th style="width:60%">ক্যালেন্ডার</th>
-                            </tr>
-                        </thead>
+                        <thead><tr style="background-color: var(--secondary); color:white;"><th style="width:15%">বছর</th><th style="width:25%">অবস্থা</th><th style="width:60%">ক্যালেন্ডার</th></tr></thead>
                         <tbody id="adm-yearly-rows"></tbody>
                     </table>
                 </div>
@@ -628,19 +614,13 @@
         const file = fileInput.files[0];
         if(!file) return;
 
-        if(file.size > 1024 * 1024) {
-            alert("ছবিটি অনেক বড়! দয়া করে ১ মেগাবাইটের কম সাইজের ছবি আপলোড করুন।");
-            return;
-        }
-
         const reader = new FileReader();
         reader.onloadend = function() {
             const member = db_members.find(m => m.id === memberId);
             if(member) {
-                member.image = reader.result; 
-                saveDB();
+                member.image = reader.result; saveDB();
                 document.getElementById('avatar-preview').src = reader.result;
-                alert("আপনার প্রোফাইল ছবি সফলভাবে সেট হয়েছে!");
+                alert("ছবি সফলভাবে সেট হয়েছে!");
             }
         }
         reader.readAsDataURL(file);
@@ -653,77 +633,44 @@
         const amount = parseFloat(document.getElementById('sub-amount').value);
         const receipt = document.getElementById('sub-receipt').value.trim();
 
-        if(!id) { alert("অনুগ্রহ করে আপনার নাম সিলেক্ট করুন।"); return; }
+        if(!id || isNaN(amount) || !receipt) { alert("সব তথ্য সঠিকভাবে দিন।"); return; }
         
         if(year === "২০২৪" && ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট"].includes(month)) {
-            alert("ফাউন্ডেশন ২০২৪ সালের সেপ্টেম্বর থেকে চালু হয়েছে। এর আগের কোনো মাস সিলেক্ট করা যাবে না।");
-            return;
+            alert("ফাউন্ডেশন ২০২৪ সালের সেপ্টেম্বর থেকে চালু হয়েছে।"); return;
         }
         
-        if(isNaN(amount) || amount <= 0) { alert("সঠিক জমার পরিমাণ দিন।"); return; }
-        if(!receipt) { alert("রসিদ নম্বর বা ট্রানজেকশন আইডি দিন।"); return; }
-
-        // সংশোধন ১ এর সুরক্ষা: একই মাসের কিস্তি দুইবার পাঠানো প্রতিরোধ
         const isDuplicate = db_requests.some(r => r.memberId === id && r.monthYear === (month + " " + year) && r.status !== 'rejected');
-        if(isDuplicate) {
-            alert("দুঃখিত, এই মাসের কিস্তির রিকোয়েস্ট ইতিমধ্যেই ডাটাবেজে পেন্ডিং বা এপ্রুভড অবস্থায় আছে!");
-            return;
-        }
+        if(isDuplicate) { alert("এই মাসের কিস্তির রিকোয়েস্ট ইতিমধ্যেই ডাটাবেজে আছে!"); return; }
 
         const m = db_members.find(x => x.id === id);
         const newRequest = {
-            id: Date.now(),
-            memberId: id,
-            memberName: m.name,
-            monthYear: month + " " + year, 
-            amount: amount,
-            receipt: receipt,
-            date: new Date().toLocaleDateString('bn-BD'),
-            status: 'pending'
+            id: Date.now(), memberId: id, memberName: m.name, monthYear: month + " " + year, 
+            amount: amount, receipt: receipt, date: new Date().toLocaleDateString('bn-BD'), status: 'pending'
         };
 
-        db_requests.push(newRequest);
-        saveDB();
-        alert("আপনার " + month + " " + year + " মাসের কিস্তির রসিদ সফলভাবে এডমিনের কাছে পাঠানো হয়েছে।");
-        location.reload();
+        db_requests.push(newRequest); saveDB();
+        alert("কিস্তির রসিদ সফলভাবে পাঠানো হয়েছে।"); location.reload();
     }
 
     function renderAdminDashboard() {
-        let totalIncome = db_members.reduce((sum, m) => sum + m.totalAmount, 0);
-        let currentFund = totalIncome - db_expenses;
-         
-        document.getElementById('adm-total-fund').textContent = currentFund + " ৳";
-         
-        let pendingRequests = db_requests.filter(r => r.status === 'pending');
-        document.getElementById('adm-pending-count').textContent = pendingRequests.length + " টি";
-
+        refreshFinancialDashboard();
         const reqTable = document.getElementById('admin-requests-table');
         reqTable.innerHTML = '';
          
         [...db_requests].reverse().forEach(r => {
-            let actionHtml = '';
-            if(r.status === 'pending') {
-                actionHtml = `
-                    <button class="action-btn btn-approve" onclick="processRequest(${r.id}, 'approved')">Approve</button>
-                    <button class="action-btn btn-reject" onclick="processRequest(${r.id}, 'rejected')">Reject</button>
-                `;
-            } else {
-                actionHtml = `<span style="color:#888; font-weight:600;">সম্পন্ন</span>`;
-            }
+            let actionHtml = (r.status === 'pending') ? `
+                <button class="action-btn btn-approve" onclick="processRequest(${r.id}, 'approved')">Approve</button>
+                <button class="action-btn btn-reject" onclick="processRequest(${r.id}, 'rejected')">Reject</button>
+            ` : `<span style="color:#888; font-weight:600;">সম্পন্ন</span>`;
 
             let statusBadge = r.status === 'pending' ? '<span class="badge badge-pending">পেন্ডিং</span>' : 
-                              r.status === 'approved' ? '<span class="badge badge-approved">গৃহীত</span>' : 
-                                                        '<span class="badge badge-rejected">বাতিল</span>';
+                              r.status === 'approved' ? '<span class="badge badge-approved">গৃহীত</span>' : '<span class="badge badge-rejected">বাতিল</span>';
 
             reqTable.innerHTML += `
                 <tr>
-                    <td>${r.date}</td>
-                    <td><b>#${r.memberId}</b> - ${r.memberName}</td>
-                    <td><span style="color:var(--primary); font-weight:bold;">${r.monthYear || 'মাস উল্লেখ নেই'}</span></td>
-                    <td><b>${r.amount} ৳</b></td>
-                    <td><mark style="padding: 2px 6px; border-radius:4px;">${r.receipt}</mark></td>
-                    <td>${statusBadge}</td>
-                    <td>${actionHtml}</td>
+                    <td>${r.date}</td><td><b>#${r.memberId}</b> - ${r.memberName}</td>
+                    <td><span style="color:var(--primary); font-weight:bold;">${r.monthYear}</span></td>
+                    <td><b>${r.amount} ৳</b></td><td><mark>${r.receipt}</mark></td><td>${statusBadge}</td><td>${actionHtml}</td>
                 </tr>
             `;
         });
@@ -732,31 +679,40 @@
     function processRequest(reqId, status) {
         const req = db_requests.find(r => r.id === reqId);
         if(!req) return;
-
         req.status = status;
-        recalculateAllMembersSummary();
-        saveDB();
-        alert(status === 'approved' ? "কিস্তি সফলভাবে এপ্রুভ করা হয়েছে!" : "কিস্তি বাতিল করা হয়েছে।");
-        
+        recalculateAllMembersSummary(); saveDB();
         sessionStorage.setItem('admin_logged_in_view', 'true');
         location.reload();
     }
 
-    function addExpense() {
-        const title = document.getElementById('exp-title').value.trim();
-        const amount = parseFloat(document.getElementById('exp-amount').value);
-        if(!title || isNaN(amount) || amount <= 0) { alert("সঠিক তথ্য দিন"); return; }
+    // ৩টি ভিন্ন অর্থখাত এন্ট্রি করার ডাইনামিক ফাংশন
+    function addFinancialRecord(type) {
+        let title, amountInput;
+        if(type === 'expense') {
+            title = document.getElementById('exp-title').value.trim();
+            amountInput = document.getElementById('exp-amount').value;
+        } else if(type === 'invest') {
+            title = document.getElementById('inv-title').value.trim();
+            amountInput = document.getElementById('inv-amount').value;
+        } else if(type === 'profit') {
+            title = document.getElementById('prf-title').value.trim();
+            amountInput = document.getElementById('prf-amount').value;
+        }
 
-        db_expenses += amount;
+        let amount = parseFloat(amountInput);
+        if(!title || isNaN(amount) || amount <= 0) { alert("অনুগ্রহ করে বিবরণ ও সঠিক টাকার পরিমাণ দিন।"); return; }
+
+        if(type === 'expense') db_expenses_total += amount;
+        else if(type === 'invest') db_invest_total += amount;
+        else if(type === 'profit') db_profit_total += amount;
+
         saveDB();
-        alert("খরচ রেকর্ড করা হয়েছে।");
-        
+        alert("ডাটাবেজে সফলভাবে যুক্ত করা হয়েছে।");
         sessionStorage.setItem('admin_logged_in_view', 'true');
         location.reload();
     }
 
     window.onload = init;
 </script>
-
 </body>
 </html>
