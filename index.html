@@ -158,9 +158,51 @@
             font-weight: bold;
             color: white;
         }
-        .m-paid { background-color: #2e7d32; } /* আদায়কৃত - সবুজ */
-        .m-due { background-color: #c62828; }  /* বকেয়া - লাল */
-        .m-na { background-color: #9e9e9e; color: #fff; }   /* প্রযোজ্য নয় - ধূসর */
+        .m-paid { background-color: #2e7d32; } 
+        .m-due { background-color: #c62828; }  
+        .m-na { background-color: #9e9e9e; color: #fff; }   
+
+        /* প্রোফাইল ডিজাইন */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+        .profile-img-container {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-info {
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        .file-upload-btn {
+            background: #ebebeb;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border: 1px dashed #999;
+        }
     </style>
 </head>
 <body>
@@ -169,7 +211,7 @@
     <!-- ব্যানার হেডার -->
     <div class="header">
         <h1>🕌 আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী</h1>
-        <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
+        <p>সদস্য কিস্তি ও केंद्रीय তহবিল ব্যবস্থাপনা সিস্টেম</p>
     </div>
 
     <!-- নেভিগেশন ট্যাব -->
@@ -189,12 +231,12 @@
                     <select id="sub-member-id" onchange="handleMemberSelection()"></select>
                 </div>
                 
-                <!-- গোপন পিন ভেরিফিকেশন সেকশন -->
+                <!-- গোপন পিন ভেরিফিকেশন সেকশন (সবার জন্য ১১১১) -->
                 <div id="pin-auth-box" class="form-group" style="display: none; background: #ffe082; padding: 10px; border-radius: 5px;">
-                    <label style="color: #b78103;">🔐 আপনার ৪ ডিজিটের গোপন পিন দিন:</label>
+                    <label style="color: #b78103;">🔐 গোপন পিন কোড দিন (১১১১):</label>
                     <div style="display: flex; gap: 5px;">
                         <input type="password" id="sub-member-pin" placeholder="পিন কোড লিখুন" maxlength="4">
-                        <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">যাচাই</button>
+                        <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">আনলক</button>
                     </div>
                 </div>
 
@@ -238,16 +280,16 @@
                 </div>
             </div>
 
-            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং বছর ভিত্তিক লাইভ ক্যালেন্ডার রিপোর্ট -->
+            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং ছবিসহ প্রোফাইল কার্ড -->
             <div class="card" style="grid-column: span 2;">
-                <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
+                <h3>📊 আপনার প্রোফাইল ও কিস্তির বর্তমান অবস্থা</h3>
                 
                 <div id="personal-status-blank" style="color: #666;">
-                    নাম সিলেক্ট করে সঠিক পিন দেওয়ার পর আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে লক ওপেন হয়ে দেখাবে।
+                    নাম সিলেক্ট করে পিন '1111' দেওয়ার পর আপনার ছবিসহ বিস্তারিত প্রোফাইল ও কিস্তির লাইভ হিসাব এখানে খুলে যাবে।
                 </div>
                 
-                <div id="personal-status-box" style="line-height: 1.8; display: none;">
-                    <!-- ডাইনামিক ডাটা আসবে পিন মিললে -->
+                <div id="personal-status-box" style="display: none;">
+                    <!-- ডাইনামিক ছবিসহ প্রোফাইল আসবে এখানে -->
                 </div>
 
                 <!-- বছর ভিত্তিক অ্যাডভান্সড রিপোর্ট টেবিল সেকশন -->
@@ -272,7 +314,7 @@
             </div>
         </div>
 
-        <!-- সকল সদস্যের পাবলিক তালিকা (এখানে বকেয়া মাস ও টাকা হাইড করে শুধু নাম এবং পদবী রাখা হয়েছে সুরক্ষার স্বার্থে) -->
+        <!-- সকল সদস্যের পাবলিক তালিকা -->
         <h3>📋 ফাউন্ডেশনের সদস্যবৃন্দ</h3>
         <div style="overflow-x: auto;">
             <table>
@@ -344,23 +386,31 @@
 </div>
 
 <script>
-    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং এডমিন কর্তৃক নির্দিষ্ট সিক্রেট পিন (PIN)
+    // ১০ জন সদস্যের প্রোফাইল ডাটা (সবার জন্য কমন পিন 1111 এবং ডাইনামিক ছবির অপশন যুক্ত)
     const initialMembers = [
-        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", pin: "1234", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "2345", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", pin: "3456", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "4567", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "5678", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "6789", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", pin: "7890", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", pin: "8901", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "9012", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "1122", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
+        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
     ];
 
     const ADMIN_PASSWORD = "287426"; 
+    const COMMON_MEMBER_PIN = "1111"; // 👈 সবার জন্য সমান পিন কোড
      
-    let db_members = JSON.parse(localStorage.getItem('f_members')) || initialMembers;
+    let db_members = JSON.parse(localStorage.getItem('f_members'));
+    
+    // যদি লোকালস্টোরেজে ডাটা না থাকে বা পুরনো ডাটাতে পিন লক ক্র্যাশ করে, তবে জোরপূর্বক রিসেট করবে
+    if(!db_members || !db_members[0].hasOwnProperty('image')) {
+        db_members = initialMembers;
+        localStorage.setItem('f_members', JSON.stringify(db_members));
+    }
+    
     let db_requests = JSON.parse(localStorage.getItem('f_requests')) || [];
     let db_expenses = JSON.parse(localStorage.getItem('f_expenses')) || 0;
 
@@ -387,7 +437,6 @@
             m.totalAmount = totalPaid;
             m.paidMonths = totalPaidMonthsCount;
 
-            // বকেয়া হিসাব (২০২৪ সালে ৪ মাস, ২০২৫ সালে ১২ মাস, ২০২৬ সালে ১২ মাস = সর্বমোট ২৮ মাস)
             let totalExpectedMonthsToDate = 4 + (12 * 2); 
             m.dueMonths = Math.max(0, totalExpectedMonthsToDate - m.paidMonths);
         });
@@ -457,7 +506,6 @@
         });
     }
 
-    // নাম সিলেক্ট করলে পিন ইনপুট বক্স সচল করার লজিক
     function handleMemberSelection() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const pinBox = document.getElementById('pin-auth-box');
@@ -466,7 +514,6 @@
         const statusBox = document.getElementById('personal-status-box');
         const reportBox = document.getElementById('personal-yearly-report');
         
-        // সব রিসেট করুন আগে
         document.getElementById('sub-member-pin').value = '';
         formContent.style.display = 'none';
         statusBox.style.display = 'none';
@@ -480,7 +527,7 @@
         }
     }
 
-    // ব্যক্তিগত গোপন পিন যাচাই করার ফাংশন
+    // পিন যাচাই (১১১১ সবার জন্য)
     function verifyMemberPin() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const inputPin = document.getElementById('sub-member-pin').value.trim();
@@ -488,18 +535,17 @@
 
         if(!m) return;
 
-        if(inputPin === m.pin) {
-            alert("পিন কোড সফলভাবে মিলেছে! আপনার হিসাব আনলক করা হলো।");
+        if(inputPin === COMMON_MEMBER_PIN) {
             document.getElementById('pin-auth-box').style.display = 'none';
             document.getElementById('installment-form-content').style.display = 'block';
             loadMemberStatus(m);
         } else {
-            alert("ভুল পিন কোড! আপনি অন্য সদস্যের হিসাব দেখতে পারবেন না।");
+            alert("ভুল পিন কোড! দয়া করে সঠিক পিন '1111' ব্যবহার করুন।");
             document.getElementById('sub-member-pin').value = '';
         }
     }
 
-    // পিন কোড মেলার পর ডাইনামিক স্ট্যাটাস লোড করা
+    // ছবিসহ লাইভ মেম্বার প্রোফাইল ও রিপোর্ট জেনারেশন
     function loadMemberStatus(m) {
         const box = document.getElementById('personal-status-box');
         const statusBlank = document.getElementById('personal-status-blank');
@@ -509,17 +555,34 @@
         statusBlank.style.display = 'none';
         const hasPending = db_requests.filter(r => r.memberId === m.id && r.status === 'pending');
 
+        // ডিফল্ট প্রোফাইল ছবি নির্ধারণ (যদি আপলোড না থাকে তবে ইসলামিক মনোগ্রাম বা একটি আইকন দেখাবে)
+        const currentAvatar = m.image ? m.image : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231b5e20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>';
+
         box.innerHTML = `
-            <strong>সদস্যের নাম:</strong> ${m.name} <br>
-            <strong>পদবী:</strong> ${m.role} | <strong>ঠিকানা:</strong> ${m.address} <br>
-            <hr style="border:0; border-top:1px dashed #ccc;">
-            🟢 <strong>মোট পরিশোধিত কিস্তি:</strong> ${m.paidMonths} মাস (${m.totalAmount} টাকা) <br>
-            🔴 <strong>মোট বকেয়া কিস্তি (২০২৪ সেপ্টেম্বর হতে বর্তমান অব্দি):</strong> ${m.dueMonths} মাস <br>
-            ⏳ <strong>অনুমোদনের অপেক্ষায় রিকোয়েস্ট:</strong> ${hasPending.length} টি
+            <div class="profile-card">
+                <div style="text-align:center;">
+                    <div class="profile-img-container">
+                        <img id="avatar-preview" src="${currentAvatar}" alt="Profile Picture">
+                    </div>
+                    <label class="file-upload-btn">
+                        📷 ছবি পরিবর্তন
+                        <input type="file" id="profile-image-input" accept="image/*" style="display:none;" onchange="uploadProfilePicture(${m.id})">
+                    </label>
+                </div>
+                <div class="profile-info">
+                    <h3 style="margin:0; color:var(--primary);">${m.name}</h3>
+                    <strong>পদবী:</strong> ${m.role} <br>
+                    <strong>ঠিকানা:</strong> ${m.address} <br>
+                    <hr style="border:0; border-top:1px dashed #ccc; margin:5px 0;">
+                    🟢 <strong>মোট পরিশোধিত:</strong> ${m.paidMonths} মাস (${m.totalAmount} ৳) <br>
+                    🔴 <strong>মোট বকেয়া:</strong> ${m.dueMonths} মাস <br>
+                    ⏳ <strong>পেন্ডিং রিকোয়েস্ট:</strong> ${hasPending.length} টি
+                </div>
+            </div>
         `;
         box.style.display = 'block';
 
-        // লাইভ ক্যালেন্ডার জেনারেট লজিক
+        // ক্যালেন্ডার রিপোর্ট
         reportRows.innerHTML = ''; 
         const yearsToTrack = ["২০২৪", "২০২৫", "২০২৬", "২০২৭", "২০২৮"];
         const approvedRequests = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
@@ -559,6 +622,31 @@
         });
 
         reportBox.style.display = 'block';
+    }
+
+    // ছবি আপলোড লজিক (Base64 ফরমেটে লোকালস্টোরেজে সেভ হবে)
+    function uploadProfilePicture(memberId) {
+        const fileInput = document.getElementById('profile-image-input');
+        const file = fileInput.files[0];
+        if(!file) return;
+
+        // ছবির সাইজ সর্বোচ্চ ১ মেগাবাইট কন্ট্রোল (লোকালস্টোরেজ মেমোরি বাঁচানোর জন্য)
+        if(file.size > 1024 * 1024) {
+            alert("ছবিটি অনেক বড়! দয়া করে ১ মেগাবাইটের কম সাইজের ছবি আপলোড করুন।");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            const member = db_members.find(m => m.id === memberId);
+            if(member) {
+                member.image = reader.result; // চিত্রটি সেভ হচ্ছে
+                saveDB();
+                document.getElementById('avatar-preview').src = reader.result;
+                alert("আপনার প্রোফাইল ছবি সফলভাবে সেট হয়েছে!");
+            }
+        }
+        reader.readAsDataURL(file);
     }
 
     function submitInstallment() {
