@@ -210,7 +210,34 @@
 
             <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড -->
             <div class="card" style="grid-column: span 2;">
-                <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
+                <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3> <!-- আপনার ফাইলের এই অংশটুকু খুঁজে নিন -->
+<div class="card" style="grid-column: span 2;">
+    <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
+    <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
+    <div id="personal-status-box" style="line-height: 1.8;">
+        <!-- ডাইনামিক ডাটা আসবে -->
+    </div>
+
+    <!-- 🔽 ঠিক এই নিচের কোডটুকু নতুন যুক্ত করুন 🔽 -->
+    <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
+        <h4 style="margin-bottom: 10px; color: var(--primary);">📅 বছর ভিত্তিক কিস্তির রিপোর্ট</h4>
+        <table style="margin-top: 5px; font-size: 0.95rem;">
+            <thead>
+                <tr style="background-color: var(--secondary);">
+                    <th>বছর</th>
+                    <th>আদায়কৃত মাস</th>
+                    <th>বকেয়া মাস</th>
+                </tr>
+            </thead>
+            <tbody id="yearly-report-rows">
+                <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাটা ঢুকবে -->
+            </tbody>
+        </table>
+    </div>
+    <!-- 🔼 নতুন কোড যুক্ত করা শেষ 🔼 -->
+
+</div>
+
                 <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
                 <div id="personal-status-box" style="line-height: 1.8;">
                     <!-- ডাইনামিক ডাটা আসবে -->
