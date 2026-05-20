@@ -186,52 +186,68 @@
                 <h3>📥 মাসিক কিস্তি জমা দিন</h3>
                 <div class="form-group">
                     <label>আপনার নাম নির্বাচন করুন:</label>
-                    <select id="sub-member-id" onchange="loadMemberStatus()"></select>
+                    <select id="sub-member-id" onchange="handleMemberSelection()"></select>
                 </div>
-                <div class="form-group">
-                    <label>কোন মাসের কিস্তি?</label>
-                    <div class="flex-inputs">
-                        <select id="sub-month">
-                            <option value="জানুয়ারি">জানুয়ারি</option>
-                            <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
-                            <option value="মার্চ">মার্চ</option>
-                            <option value="এপ্রিল">এপ্রিল</option>
-                            <option value="মে">মে</option>
-                            <option value="জুন">জুন</option>
-                            <option value="জুলাই">জুলাই</option>
-                            <option value="আগস্ট">আগস্ট</option>
-                            <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
-                            <option value="অক্টোবর">অক্টোবর</option>
-                            <option value="নভেম্বর">নভেম্বর</option>
-                            <option value="ডিসেম্বর">ডিসেম্বর</option>
-                        </select>
-                        <select id="sub-year">
-                            <option value="২০২৪">২০২৪</option>
-                            <option value="২০২৫">২০২৫</option>
-                            <option value="২০২৬">২০২৬</option>
-                            <option value="২০২৭">২০২৭</option>
-                            <option value="২০২৮">২০২৮</option>
-                        </select>
+                
+                <!-- গোপন পিন ভেরিফিকেশন সেকশন -->
+                <div id="pin-auth-box" class="form-group" style="display: none; background: #ffe082; padding: 10px; border-radius: 5px;">
+                    <label style="color: #b78103;">🔐 আপনার ৪ ডিজিটের গোপন পিন দিন:</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="password" id="sub-member-pin" placeholder="পিন কোড লিখুন" maxlength="4">
+                        <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">যাচাই</button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>কিস্তির পরিমাণ (টাকা):</label>
-                    <input type="number" id="sub-amount" value="৫০০" min="0">
+
+                <!-- পিন মিললে এই ফর্ম সেকশনটি খুলবে -->
+                <div id="installment-form-content" style="display: none;">
+                    <div class="form-group">
+                        <label>কোন মাসের কিস্তি?</label>
+                        <div class="flex-inputs">
+                            <select id="sub-month">
+                                <option value="জানুয়ারি">জানুয়ারি</option>
+                                <option value="ফেব্রুয়ারি">ফেব্রুয়ারি</option>
+                                <option value="মার্চ">মার্চ</option>
+                                <option value="এপ্রিল">এপ্রিল</option>
+                                <option value="মে">মে</option>
+                                <option value="জুন">জুন</option>
+                                <option value="জুলাই">জুলাই</option>
+                                <option value="আগস্ট">আগস্ট</option>
+                                <option value="সেপ্টেম্বর">সেপ্টেম্বর</option>
+                                <option value="অক্টোবর">অক্টোবর</option>
+                                <option value="নভেম্বর">নভেম্বর</option>
+                                <option value="ডিসেম্বর">ডিসেম্বর</option>
+                            </select>
+                            <select id="sub-year">
+                                <option value="২০২৪">২০২৪</option>
+                                <option value="২০২৫">২০২৫</option>
+                                <option value="২০২৬">২০২৬</option>
+                                <option value="২০২৭">২০২৭</option>
+                                <option value="২০২৮">২০২৮</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>কিস্তির পরিমাণ (টাকা):</label>
+                        <input type="number" id="sub-amount" value="৫০০" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>জমার মাধ্যম ও ট্রানজেকশন আইডি / রসিদ নং:</label>
+                        <input type="text" id="sub-receipt" placeholder="উদা: Bkash-Trx12345 বা রসিদ নং">
+                    </div>
+                    <button class="btn-block" onclick="submitInstallment()">রসিদ ও কিস্তি জমা দিন</button>
                 </div>
-                <div class="form-group">
-                    <label>জমার মাধ্যম ও ট্রানজেকশন আইডি / রসিদ নং:</label>
-                    <input type="text" id="sub-receipt" placeholder="উদা: Bkash-Trx12345 বা রসিদ নং">
-                </div>
-                <button class="btn-block" onclick="submitInstallment()">রসিদ ও কিস্তি জমা দিন</button>
             </div>
 
             <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং বছর ভিত্তিক লাইভ ক্যালেন্ডার রিপোর্ট -->
             <div class="card" style="grid-column: span 2;">
                 <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
-                <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
                 
-                <div id="personal-status-box" style="line-height: 1.8;">
-                    <!-- ডাইনামিক ডাটা আসবে -->
+                <div id="personal-status-blank" style="color: #666;">
+                    নাম সিলেক্ট করে সঠিক পিন দেওয়ার পর আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে লক ওপেন হয়ে দেখাবে।
+                </div>
+                
+                <div id="personal-status-box" style="line-height: 1.8; display: none;">
+                    <!-- ডাইনামিক ডাটা আসবে পিন মিললে -->
                 </div>
 
                 <!-- বছর ভিত্তিক অ্যাডভান্সড রিপোর্ট টেবিল সেকশন -->
@@ -256,17 +272,16 @@
             </div>
         </div>
 
-        <!-- সকল সদস্যের পাবলিক তালিকা -->
-        <h3>📋 ফাউন্ডেশনের সকল সদস্য ও কিস্তির সারসংক্ষেপ</h3>
+        <!-- সকল সদস্যের পাবলিক তালিকা (এখানে বকেয়া মাস ও টাকা হাইড করে শুধু নাম এবং পদবী রাখা হয়েছে সুরক্ষার স্বার্থে) -->
+        <h3>📋 ফাউন্ডেশনের সদস্যবৃন্দ</h3>
         <div style="overflow-x: auto;">
             <table>
                 <thead>
                     <tr>
+                        <th>ক্রমিক</th>
                         <th>পদবী</th>
-                        <th>নাম ও ঠিকানা</th>
-                        <th>মোট পেইড মাস</th>
-                        <th>বকেয়া মাস</th>
-                        <th>মোট জমা টাকা</th>
+                        <th>নাম</th>
+                        <th>ঠিকানা</th>
                     </tr>
                 </thead>
                 <tbody id="public-members-table"></tbody>
@@ -329,27 +344,26 @@
 </div>
 
 <script>
-    // ১০ জন সদস্যের প্রোফাইল ডাটা
+    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং এডমিন কর্তৃক নির্দিষ্ট সিক্রেট পিন (PIN)
     const initialMembers = [
-        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
+        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", pin: "202401", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "202402", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", pin: "202403", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "202404", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "202405", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "202406", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", pin: "202407", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", pin: "202408", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "202409", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "202410", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
     ];
 
-    const ADMIN_PASSWORD = "al-ihsan-admin"; 
+    const ADMIN_PASSWORD = "287426"; 
      
     let db_members = JSON.parse(localStorage.getItem('f_members')) || initialMembers;
     let db_requests = JSON.parse(localStorage.getItem('f_requests')) || [];
     let db_expenses = JSON.parse(localStorage.getItem('f_expenses')) || 0;
 
-    // ১২ মাসের বাংলা নাম তালিকা
     const allMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
 
     function saveDB() {
@@ -358,7 +372,6 @@
         localStorage.setItem('f_expenses', JSON.stringify(db_expenses));
     }
 
-    // গ্লোবাল মেম্বার বকেয়া রি-ক্যালকুলেশন লজিক (২০২৪ সালের সেপ্টেম্বর থেকে শুরু)
     function recalculateAllMembersSummary() {
         db_members.forEach(m => {
             let totalPaid = 0;
@@ -374,8 +387,8 @@
             m.totalAmount = totalPaid;
             m.paidMonths = totalPaidMonthsCount;
 
-            // বকেয়া হিসাব (২০২৪ সালে ৪ মাস, অন্য পূর্ণ বছরগুলোতে ১২ মাস করে)
-            let totalExpectedMonthsToDate = 4 + (12 * 2); // ২০২৪ (৪ মাস) + ২০২৫ (১২) + ২০২৬ (১২) = ২৮ মাস সর্বমোট (২০২৬ সাল পর্যন্ত)
+            // বকেয়া হিসাব (২০২৪ সালে ৪ মাস, ২০২৫ সালে ১২ মাস, ২০২৬ সালে ১২ মাস = সর্বমোট ২৮ মাস)
+            let totalExpectedMonthsToDate = 4 + (12 * 2); 
             m.dueMonths = Math.max(0, totalExpectedMonthsToDate - m.paidMonths);
         });
     }
@@ -418,12 +431,6 @@
         db_members.forEach(m => {
             select.innerHTML += `<option value="${m.id}">${m.name} (${m.role})</option>`;
         });
-        
-        const savedMemberId = sessionStorage.getItem('selected_member_id');
-        if(savedMemberId) {
-            select.value = savedMemberId;
-            loadMemberStatus();
-        }
 
         renderPublicTable();
 
@@ -438,38 +445,69 @@
     function renderPublicTable() {
         const tbody = document.getElementById('public-members-table');
         tbody.innerHTML = '';
-        db_members.forEach(m => {
+        db_members.forEach((m, idx) => {
             tbody.innerHTML += `
                 <tr>
+                    <td>${idx + 1}</td>
                     <td><strong>${m.role}</strong></td>
-                    <td>${m.name}<br><small style="color:#666;">${m.address}</small></td>
-                    <td style="color:green; font-weight:bold;">${m.paidMonths} মাস</td>
-                    <td style="color:red; font-weight:bold;">${m.dueMonths} মাস</td>
-                    <td><strong>${m.totalAmount} ৳</strong></td>
+                    <td>${m.name}</td>
+                    <td><small style="color:#666;">${m.address}</small></td>
                 </tr>
             `;
         });
     }
 
-    // অ্যাডভান্সড লাইভ ক্যালেন্ডার রিপোর্টিং ফাংশন
-    function loadMemberStatus() {
+    // নাম সিলেক্ট করলে পিন ইনপুট বক্স সচল করার লজিক
+    function handleMemberSelection() {
         const id = parseInt(document.getElementById('sub-member-id').value);
+        const pinBox = document.getElementById('pin-auth-box');
+        const formContent = document.getElementById('installment-form-content');
+        const statusBlank = document.getElementById('personal-status-blank');
+        const statusBox = document.getElementById('personal-status-box');
+        const reportBox = document.getElementById('personal-yearly-report');
+        
+        // সব রিসেট করুন আগে
+        document.getElementById('sub-member-pin').value = '';
+        formContent.style.display = 'none';
+        statusBox.style.display = 'none';
+        reportBox.style.display = 'none';
+        statusBlank.style.display = 'block';
+
+        if(id) {
+            pinBox.style.display = 'block';
+        } else {
+            pinBox.style.display = 'none';
+        }
+    }
+
+    // ব্যক্তিগত গোপন পিন যাচাই করার ফাংশন
+    function verifyMemberPin() {
+        const id = parseInt(document.getElementById('sub-member-id').value);
+        const inputPin = document.getElementById('sub-member-pin').value.trim();
+        const m = db_members.find(x => x.id === id);
+
+        if(!m) return;
+
+        if(inputPin === m.pin) {
+            alert("পিন কোড সফলভাবে মিলেছে! আপনার হিসাব আনলক করা হলো।");
+            document.getElementById('pin-auth-box').style.display = 'none';
+            document.getElementById('installment-form-content').style.display = 'block';
+            loadMemberStatus(m);
+        } else {
+            alert("ভুল পিন কোড! আপনি অন্য সদস্যের হিসাব দেখতে পারবেন না।");
+            document.getElementById('sub-member-pin').value = '';
+        }
+    }
+
+    // পিন কোড মেলার পর ডাইনামিক স্ট্যাটাস লোড করা
+    function loadMemberStatus(m) {
         const box = document.getElementById('personal-status-box');
+        const statusBlank = document.getElementById('personal-status-blank');
         const reportBox = document.getElementById('personal-yearly-report');
         const reportRows = document.getElementById('yearly-report-rows');
-        
-        if(!id) { 
-            box.innerHTML = ''; 
-            reportBox.style.display = 'none';
-            sessionStorage.removeItem('selected_member_id'); 
-            return; 
-        }
          
-        sessionStorage.setItem('selected_member_id', id);
-        recalculateAllMembersSummary();
-        const m = db_members.find(x => x.id === id);
-         
-        const hasPending = db_requests.filter(r => r.memberId === id && r.status === 'pending');
+        statusBlank.style.display = 'none';
+        const hasPending = db_requests.filter(r => r.memberId === m.id && r.status === 'pending');
 
         box.innerHTML = `
             <strong>সদস্যের নাম:</strong> ${m.name} <br>
@@ -479,25 +517,23 @@
             🔴 <strong>মোট বকেয়া কিস্তি (২০২৪ সেপ্টেম্বর হতে বর্তমান অব্দি):</strong> ${m.dueMonths} মাস <br>
             ⏳ <strong>অনুমোদনের অপেক্ষায় রিকোয়েস্ট:</strong> ${hasPending.length} টি
         `;
+        box.style.display = 'block';
 
         // লাইভ ক্যালেন্ডার জেনারেট লজিক
         reportRows.innerHTML = ''; 
         const yearsToTrack = ["২০২৪", "২০২৫", "২০২৬", "২০২৭", "২০২৮"];
-        const approvedRequests = db_requests.filter(r => r.memberId === id && r.status === 'approved');
+        const approvedRequests = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
 
         yearsToTrack.forEach(year => {
             let monthsPaidCount = 0;
-            let totalExpectInYear = (year === "২০২৪") ? 4 : 12; // ২০২৪ এ ৪ মাস, বাকি বছরে ১২ মাস
+            let totalExpectInYear = (year === "২০২৪") ? 4 : 12;
             let monthsHtml = `<div class="months-grid">`;
 
             allMonths.forEach((month, index) => {
-                // ২০২৪ সালের জানুয়ারি থেকে আগস্ট পর্যন্ত প্রযোজ্য নয় (m-na)
                 if(year === "২০২৪" && index < 8) {
                     monthsHtml += `<div class="month-chip m-na">${month}</div>`;
                 } else {
-                    // চেক করা এই মাস ও বছর এপ্রুভড লিস্টে আছে কি না
                     const isPaid = approvedRequests.some(r => r.monthYear === (month + " " + year));
-                    
                     if(isPaid) {
                         monthsPaidCount++;
                         monthsHtml += `<div class="month-chip m-paid">${month} ✓</div>`;
@@ -534,7 +570,6 @@
 
         if(!id) { alert("অনুগ্রহ করে আপনার নাম সিলেক্ট করুন।"); return; }
         
-        // ২০২৪ সালের প্রথমদিকের মাসের জন্য সতর্কবার্তা
         if(year === "২০২৪" && ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট"].includes(month)) {
             alert("ফাউন্ডেশন ২০২৪ সালের সেপ্টেম্বর থেকে চালু হয়েছে। এর আগের কোনো মাস সিলেক্ট করা যাবে না।");
             return;
