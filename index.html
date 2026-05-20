@@ -6,224 +6,190 @@
     <title>আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী - হিসাব ব্যবস্থাপনা</title>
     <style>
         :root {
-            --primary: #1b5e20; /* ইসলামিক গ্রিন থিম */
+            --primary: #1b5e20; 
             --secondary: #2e7d32;
             --accent: #c62828;
             --dark: #212121;
-            --light: #f5f5f5;
+            --light: #f8f9fa;
+            --warning: #f57c00;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e8f5e9;
+            background-color: #f0f4f1;
             margin: 0;
-            padding: 15px;
+            padding: 0;
             color: var(--dark);
         }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        .app-wrapper {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
         .header {
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: linear-gradient(135deg, #1b5e20, #0d3c12);
             color: white;
-            padding: 30px 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 16px;
             margin-bottom: 25px;
+            box-shadow: 0 8px 24px rgba(27, 94, 32, 0.2);
         }
-        .header h1 { margin: 0; font-size: 1.8rem; }
-        .header p { margin: 10px 0 0 0; opacity: 0.9; }
+        .header img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: white;
+            padding: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .header-text { text-align: left; }
+        .header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.85; font-size: 1rem; }
          
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 25px;
         }
         .tab-btn {
-            padding: 12px 25px;
+            padding: 12px 28px;
             font-size: 1rem;
             cursor: pointer;
             border: none;
-            background-color: #ddd;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
+            background-color: #e0e0e0;
+            color: #555;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .tab-btn.active {
             background-color: var(--primary);
             color: white;
+            box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
         }
          
-        .panel { display: none; }
+        .panel { display: none; animation: fadeIn 0.4s ease; }
         .panel.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
             margin-bottom: 25px;
         }
         .card {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid var(--primary);
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s;
         }
-        .card.expense-card { border-left-color: var(--accent); }
+        .card:hover { transform: translateY(-2px); }
+        .card h3 { margin-top: 0; margin-bottom: 20px; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.2rem; }
+        .card.expense-card { border-top-color: var(--accent); }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
             background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         th, td {
-            border: 1px solid #e0e0e0;
-            padding: 12px;
+            padding: 14px;
             text-align: center;
+            border-bottom: 1px solid #eee;
         }
-        th { background-color: var(--primary); color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
+        th { background-color: var(--primary); color: white; font-weight: 600; }
+        tr:hover { background-color: #f9f9f9; }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 7px; font-weight: 600; color: #444; font-size: 0.95rem; }
         input, select, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
             font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #fafafa;
         }
-        .flex-inputs {
-            display: flex;
-            gap: 10px;
-        }
+        input:focus, select:focus { border-color: var(--primary); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(27,94,32,0.1); }
+        .flex-inputs { display: flex; gap: 10px; }
+        
         button.btn-block {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
         }
-        button.btn-block:hover { background-color: var(--secondary); }
+        button.btn-block:hover { background-color: var(--secondary); box-shadow: 0 4px 12px rgba(46,125,50,0.2); }
          
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-        .badge-pending { background-color: #ffe082; color: #b78103; }
-        .badge-approved { background-color: #c8e6c9; color: #2e7d32; }
-        .badge-rejected { background-color: #ffcdd2; color: #c62828; }
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .badge-pending { background-color: #fff3e0; color: var(--warning); }
+        .badge-approved { background-color: #e8f5e9; color: var(--secondary); }
+        .badge-rejected { background-color: #ffebee; color: var(--accent); }
 
-        .action-btn {
-            padding: 5px 10px;
-            margin: 2px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            color: white;
-        }
+        .action-btn { padding: 6px 14px; margin: 2px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 600; transition: opacity 0.2s; }
+        .action-btn:hover { opacity: 0.9; }
         .btn-approve { background-color: #388e3c; }
         .btn-reject { background-color: #d32f2f; }
 
-        /* মাসের গ্রিড স্টাইল */
-        .months-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 5px;
-            margin-top: 5px;
-        }
-        .month-chip {
-            font-size: 0.75rem;
-            padding: 4px 2px;
-            border-radius: 3px;
-            text-align: center;
-            font-weight: bold;
-            color: white;
-        }
-        .m-paid { background-color: #2e7d32; } 
-        .m-due { background-color: #c62828; }  
-        .m-na { background-color: #9e9e9e; color: #fff; }   
+        .months-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 6px; margin-top: 5px; }
+        .month-chip { font-size: 0.75rem; padding: 6px 2px; border-radius: 6px; text-align: center; font-weight: 600; color: white; }
+        .m-paid { background-color: #2e7d32; box-shadow: 0 2px 4px rgba(46,125,50,0.15); } 
+        .m-due { background-color: #c62828; box-shadow: 0 2px 4px rgba(198,40,40,0.15); }  
+        .m-na { background-color: #bdbdbd; color: #fff; }   
 
-        /* প্রোফাইল ডিজাইন */
-        .profile-card {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
-        .profile-img-container {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--primary);
-            background: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .profile-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-info {
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-        .file-upload-btn {
-            background: #ebebeb;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: inline-block;
-            cursor: pointer;
-            border: 1px dashed #999;
-        }
+        .profile-card { display: flex; align-items: center; gap: 20px; background: #fafafa; padding: 20px; border-radius: 12px; border: 1px solid #eaeaea; margin-bottom: 15px; }
+        .profile-img-container { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid var(--primary); background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-info { flex-grow: 1; line-height: 1.7; }
+        .file-upload-btn { background: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; margin-top: 8px; display: inline-block; cursor: pointer; border: 1px dashed var(--primary); color: var(--primary); font-weight: 600; transition: all 0.2s; }
+        .file-upload-btn:hover { background: #e8f5e9; }
+        
+        .stat-banner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; text-align: center; }
+        .stat-box { padding: 10px; border-radius: 8px; color: white; font-weight: bold; font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- ব্যানার হেডার -->
+<div class="app-wrapper">
     <div class="header">
-        <h1>🕌 আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী</h1>
-        <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
+        <img src="https://i.ibb.co/bRVgN9vG/1000010448.jpg" alt="Logo">
+        <div class="header-text">
+            <h1>আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী</h1>
+            <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
+        </div>
     </div>
 
-    <!-- নেভিগেশন ট্যাব -->
     <div class="nav-tabs">
         <button id="btn-member-tab" class="tab-btn active" onclick="switchTab('member-view')">👤 সদস্য প্যানেল</button>
         <button id="btn-admin-tab" class="tab-btn" onclick="switchTab('admin-view')">🔑 এডমিন প্যানেল</button>
     </div>
 
-    <!-- ================= সদস্য প্যানেল ================= -->
     <div id="member-view" class="panel active">
         <div class="grid-3">
-            <!-- কিস্তি জমা দেওয়ার ফর্ম -->
             <div class="card">
                 <h3>📥 মাসিক কিস্তি জমা দিন</h3>
                 <div class="form-group">
@@ -231,16 +197,14 @@
                     <select id="sub-member-id" onchange="handleMemberSelection()"></select>
                 </div>
                 
-                <!-- গোপন পিন ভেরিফিকেশন সেকশন (গোপন রাখা হয়েছে) -->
-                <div id="pin-auth-box" class="form-group" style="display: none; background: #ffe082; padding: 10px; border-radius: 5px;">
+                <div id="pin-auth-box" class="form-group" style="display: none; background: #fff8e1; padding: 15px; border-radius: 10px; border: 1px solid #ffe082;">
                     <label style="color: #b78103;">🔐 আপনার ৪ ডিজিটের গোপন পিন দিন:</label>
                     <div style="display: flex; gap: 5px;">
-                        <input type="password" id="sub-member-pin" placeholder="পিন কোড লিখুন" maxlength="4">
-                        <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">আনলক</button>
+                        <input type="password" id="sub-member-pin" placeholder="গোপন পিন লিখুন" maxlength="4">
+                        <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">আনলক</button>
                     </div>
                 </div>
 
-                <!-- পিন মিললে এই ফর্ম সেকশনটি খুলবে -->
                 <div id="installment-form-content" style="display: none;">
                     <div class="form-group">
                         <label>কোন মাসের কিস্তি?</label>
@@ -280,42 +244,35 @@
                 </div>
             </div>
 
-            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং ছবিসহ প্রোফাইল কার্ড -->
             <div class="card" style="grid-column: span 2;">
-                <h3>📊 আপনার প্রোফাইল ও কিস্তির বর্তমান অবস্থা</h3>
+                <h3>📊 আপনার প্রোফাইল ও কিস্তির বিবরণ</h3>
                 
-                <div id="personal-status-blank" style="color: #666;">
-                    নাম সিলেক্ট করে এডমিন কর্তৃক প্রদত্ত সঠিক গোপন পিন দেওয়ার পর ছবিসহ আপনার বিস্তারিত প্রোফাইল ও কিস্তির লাইভ হিসাব এখানে খুলে যাবে।
+                <div id="personal-status-blank" style="color: #777; text-align: center; padding: 40px 0;">
+                    <p style="font-size: 1.1rem;">নাম সিলেক্ট করে সঠিক গোপন পিন দেওয়ার পর আপনার প্রোফাইল ও কিস্তির হিসাব এখানে প্রদর্শিত হবে।</p>
                 </div>
                 
-                <div id="personal-status-box" style="display: none;">
-                    <!-- ডাইনামিক ছবিসহ প্রোফাইল আসবে এখানে -->
-                </div>
+                <div id="personal-status-box" style="display: none;"></div>
 
-                <!-- বছর ভিত্তিক অ্যাডভান্সড রিপোর্ট টেবিল সেকশন -->
                 <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
-                    <h4 style="margin-bottom: 5px; color: var(--primary);">📅 বছর ভিত্তিক বিস্তারিত কিস্তির বিবরণ</h4>
-                    <p style="font-size:0.85rem; margin:0 0 10px 0;"><span style="color:#2e7d32;">■ সবুজ = আদায়</span> | <span style="color:#c62828;">■ লাল = বকেয়া</span> | <span style="color:#9e9e9e;">■ ধূসর = শুরু হয়নি</span></p>
+                    <h4 style="margin-bottom: 5px; color: var(--primary);">📅 বছর ভিত্তিক বিস্তারিত কিস্তির ক্যালেন্ডার</h4>
+                    <p style="font-size:0.85rem; margin:0 0 12px 0;"><span style="color:#2e7d32;">■ সবুজ = আদায়</span> | <span style="color:#c62828;">■ লাল = বকেয়া</span> | <span style="color:#9e9e9e;">■ ধূসর = প্রযোজ্য নয়</span></p>
                     <div style="overflow-x: auto;">
-                        <table style="margin-top: 5px; font-size: 0.9rem;">
+                        <table>
                             <thead>
                                 <tr style="background-color: var(--secondary);">
                                     <th style="width: 15%;">বছর</th>
-                                    <th style="width: 20%;">আদায় / বকেয়া</th>
-                                    <th style="width: 65%;">মাস ভিত্তিক লাইভ অবস্থা</th>
+                                    <th style="width: 25%;">আদায় / বকেয়া</th>
+                                    <th style="width: 60%;">মাস ভিত্তিক লাইভ অবস্থা</th>
                                 </tr>
                             </thead>
-                            <tbody id="yearly-report-rows">
-                                <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাইনামিক ডাটা ঢুকবে -->
-                            </tbody>
+                            <tbody id="yearly-report-rows"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- সকল সদস্যের পাবলিক তালিকা -->
-        <h3>📋 ফাউন্ডেশনের সদস্যবৃন্দ</h3>
+        <h3>📋 ফাউন্ডেশনের সম্মানিত সদস্যবৃন্দ</h3>
         <div style="overflow-x: auto;">
             <table>
                 <thead>
@@ -331,39 +288,45 @@
         </div>
     </div>
 
-    <!-- ================= এডমিন প্যানেল ================= -->
     <div id="admin-view" class="panel">
-        <!-- এডমিন পাসওয়ার্ড গেট -->
         <div id="admin-auth">
-            <div class="card" style="max-width: 400px; margin: 0 auto; text-align: center;">
-                <h3>নিরাপত্তা লগইন</h3>
-                <input type="password" id="admin-pass" placeholder="এডমিন পাসওয়ার্ড দিন" style="margin-bottom: 15px;">
+            <div class="card" style="max-width: 400px; margin: 40px auto; text-align: center;">
+                <h3>🔑 নিরাপত্তা লগইন</h3>
+                <input type="password" id="admin-pass" placeholder="এডমিন পাসওয়ার্ড দিন" style="margin-bottom: 15px; text-align: center;">
                 <button class="btn-block" onclick="verifyAdmin()">লগইন করুন</button>
             </div>
         </div>
 
-        <!-- মূল এডমিন ড্যাশবোর্ড -->
         <div id="admin-content" style="display: none;">
             <div class="grid-3">
-                <div class="card" style="background-color: #e8f5e9;">
-                    <h4>কেন্দ্রীয় মোট তহবিল</h4>
-                    <h2 id="adm-total-fund" style="color: var(--primary); margin:0;">০ ৳</h2>
+                <div class="card" style="border-top-color: #2e7d32; background: #f1f8e9;">
+                    <h4 style="margin:0; color:#2e7d32;">💰 কেন্দ্রীয় মোট তহবিল</h4>
+                    <h2 id="adm-total-fund" style="color: var(--primary); margin:10px 0 0 0; font-size: 2rem;">০ ৳</h2>
                 </div>
-                <div class="card" style="background-color: #fff8e1;">
-                    <h4>পেন্ডিং রিকোয়েস্ট (যাচাইয়ের অপেক্ষায়)</h4>
-                    <h2 id="adm-pending-count" style="color: #f57c00; margin:0;">০ টি</h2>
+                <div class="card" style="border-top-color: var(--warning); background: #fff3e0;">
+                    <h4 style="margin:0; color:var(--warning);">⏳ পেন্ডিং রিকোয়েস্ট</h4>
+                    <h2 id="adm-pending-count" style="color: var(--warning); margin:10px 0 0 0; font-size: 2rem;">০ টি</h2>
                 </div>
-                <div class="card expense-card">
-                    <h4>অন্যান্য খরচ এন্ট্রি</h4>
+                <div class="card expense-card" style="background: #ffebee;">
+                    <h4 style="margin:0 0 10px 0; color:var(--accent);">💸 অন্যান্য খরচ এন্ট্রি</h4>
                     <div style="display: flex; gap: 5px;">
-                        <input type="text" id="exp-title" placeholder="খরচের বিবরণ">
-                        <input type="number" id="exp-amount" placeholder="টাকা">
-                        <button onclick="addExpense()" style="background:var(--accent); color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">যোগ করুন</button>
+                        <input type="text" id="exp-title" placeholder="বিবরণ">
+                        <input type="number" id="exp-amount" placeholder="টাকা" style="width: 100px;">
+                        <button onclick="addExpense()" style="background:var(--accent); color:white; border:none; padding:0 15px; border-radius:8px; cursor:pointer; font-weight: bold;">যোগ</button>
                     </div>
                 </div>
             </div>
 
-            <!-- রিকোয়েস্ট অনুমোদন সেকশন -->
+            <div class="card" style="margin-bottom: 25px; border-top-color: #0288d1;">
+                <h3>🔍 সদস্য বিবরণী ও প্রোফাইল ট্র্যাকার (এডমিন ভিউ)</h3>
+                <div class="form-group" style="max-width: 400px;">
+                    <label>যেকোনো সদস্যের বিবরণ দেখতে সিলেক্ট করুন:</label>
+                    <select id="adm-member-select" onchange="loadAdminMemberView()"></select>
+                </div>
+                <div id="adm-member-profile-box" style="display: none; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+            </div>
+
             <h3>📥 সদস্যদের পাঠানো কিস্তির রিকোয়েস্টসমূহ (অনুমোদন পেন্ডিং)</h3>
             <div style="overflow-x: auto;">
                 <table>
@@ -386,7 +349,10 @@
 </div>
 
 <script>
-    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং আপনার নির্ধারিত ২০+০১ ফরম্যাটের পিন স্ট্রাকচার
+    // লোগো ইমেজ ইউআরএল
+    const LOGO_URL = "https://i.ibb.co/bRVgN9vG/1000010448.jpg";
+
+    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং আপনার নির্ধারিত ২০+০১ থেকে ২০১০ পিন বিন্যাস
     const initialMembers = [
         { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", pin: "2001", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
         { id: 2, name: "বোরহান উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "2002", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
@@ -404,8 +370,8 @@
      
     let db_members = JSON.parse(localStorage.getItem('f_members'));
     
-    // ব্রাউজারে পুরনো বা কমন পিন সেভ থাকলে তা পরিবর্তন করে নতুন ২০০১-২০১০ পিন সেট করার অটোমেটিক ফিল্টার
-    if(!db_members || !db_members[0].hasOwnProperty('pin') || db_members[0].pin === "1111" || db_members[0].pin === "1234") {
+    // লোকালস্টোরেজ পিন রি-ভেরিফিকেশন ফিল্টার
+    if(!db_members || !db_members[0].hasOwnProperty('pin') || db_members[0].pin === "1111" || db_members[0].pin.startsWith("12")) {
         db_members = initialMembers;
         localStorage.setItem('f_members', JSON.stringify(db_members));
     }
@@ -421,22 +387,22 @@
         localStorage.setItem('f_expenses', JSON.stringify(db_expenses));
     }
 
+    // সংশোধন ১: পরিশোধিত মাস গণনার নিখুঁত লজিক
     function recalculateAllMembersSummary() {
         db_members.forEach(m => {
             let totalPaid = 0;
-            let totalPaidMonthsCount = 0;
             
+            // অনুমোদিত রিকোয়েস্ট থেকে ইউনিক মাসগুলো কাউন্ট করা হবে
             const approvedReqs = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
+            
             approvedReqs.forEach(r => {
                 totalPaid += r.amount;
-                let calculatedMonths = Math.floor(r.amount / 500) || 1;
-                totalPaidMonthsCount += calculatedMonths;
             });
 
             m.totalAmount = totalPaid;
-            m.paidMonths = totalPaidMonthsCount;
+            m.paidMonths = approvedReqs.length; // যতটি মাস এডমিন অনুমোদন করেছেন ঠিক তত মাস
 
-            let totalExpectedMonthsToDate = 4 + (12 * 2); 
+            let totalExpectedMonthsToDate = 4 + (12 * 2); // সেপ্টেম্বর ২০২৪ থেকে বর্তমান মে ২০২৬ অব্দি মোট ২৮ মাস
             m.dueMonths = Math.max(0, totalExpectedMonthsToDate - m.paidMonths);
         });
     }
@@ -474,10 +440,17 @@
         recalculateAllMembersSummary();
         saveDB();
 
+        // ইউজার ও এডমিন ড্রপডাউন লোড
         const select = document.getElementById('sub-member-id');
+        const admSelect = document.getElementById('adm-member-select');
+        
         select.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
+        admSelect.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
+        
         db_members.forEach(m => {
-            select.innerHTML += `<option value="${m.id}">${m.name} (${m.role})</option>`;
+            let optionText = `${m.id}. ${m.name} (${m.role})`;
+            select.innerHTML += `<option value="${m.id}">${optionText}</option>`;
+            admSelect.innerHTML += `<option value="${m.id}">${optionText}</option>`;
         });
 
         renderPublicTable();
@@ -496,7 +469,7 @@
         db_members.forEach((m, idx) => {
             tbody.innerHTML += `
                 <tr>
-                    <td>${idx + 1}</td>
+                    <td><b>${m.id}</b></td>
                     <td><strong>${m.role}</strong></td>
                     <td>${m.name}</td>
                     <td><small style="color:#666;">${m.address}</small></td>
@@ -519,14 +492,9 @@
         reportBox.style.display = 'none';
         statusBlank.style.display = 'block';
 
-        if(id) {
-            pinBox.style.display = 'block';
-        } else {
-            pinBox.style.display = 'none';
-        }
+        if(id) { pinBox.style.display = 'block'; } else { pinBox.style.display = 'none'; }
     }
 
-    // ব্যক্তিগত সিক্রেট পিন যাচাইকরণ ফাংশন (২০০১ থেকে ২০১০)
     function verifyMemberPin() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const inputPin = document.getElementById('sub-member-pin').value.trim();
@@ -537,51 +505,55 @@
         if(inputPin === m.pin) {
             document.getElementById('pin-auth-box').style.display = 'none';
             document.getElementById('installment-form-content').style.display = 'block';
-            loadMemberStatus(m);
+            
+            // মেম্বার নিজের ভিউ লোড করবে
+            const htmlContent = generateProfileHTML(m, true);
+            document.getElementById('personal-status-blank').style.display = 'none';
+            document.getElementById('personal-status-box').innerHTML = htmlContent;
+            document.getElementById('personal-status-box').style.display = 'block';
+            generateYearlyCalendar(m, 'yearly-report-rows');
+            document.getElementById('personal-yearly-report').style.display = 'block';
         } else {
             alert("ভুল গোপন পিন কোড! আপনি অন্য সদস্যের তথ্য দেখতে পারবেন না।");
             document.getElementById('sub-member-pin').value = '';
         }
     }
 
-    function loadMemberStatus(m) {
-        const box = document.getElementById('personal-status-box');
-        const statusBlank = document.getElementById('personal-status-blank');
-        const reportBox = document.getElementById('personal-yearly-report');
-        const reportRows = document.getElementById('yearly-report-rows');
-         
-        statusBlank.style.display = 'none';
+    // প্রোফাইল জেনারেটর কমন ফাংশন
+    function generateProfileHTML(m, isUserView) {
         const hasPending = db_requests.filter(r => r.memberId === m.id && r.status === 'pending');
+        const currentAvatar = m.image ? m.image : LOGO_URL;
 
-        // ডিফল্ট অ্যাভাটার আইকন
-        const currentAvatar = m.image ? m.image : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231b5e20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>';
-
-        box.innerHTML = `
+        return `
             <div class="profile-card">
                 <div style="text-align:center;">
                     <div class="profile-img-container">
-                        <img id="avatar-preview" src="${currentAvatar}" alt="Profile Picture">
+                        <img id="${isUserView ? 'avatar-preview' : 'adm-avatar-preview'}" src="${currentAvatar}" alt="Profile">
                     </div>
+                    ${isUserView ? `
                     <label class="file-upload-btn">
-                        📷 ছবি আপলোড/পরিবর্তন
+                        📷 ছবি আপলোড
                         <input type="file" id="profile-image-input" accept="image/*" style="display:none;" onchange="uploadProfilePicture(${m.id})">
-                    </label>
+                    </label>` : ''}
                 </div>
                 <div class="profile-info">
-                    <h3 style="margin:0; color:var(--primary);">${m.name}</h3>
-                    <strong>পদবী:</strong> ${m.role} <br>
+                    <h3 style="margin:0; color:var(--primary); font-size:1.4rem;">${m.name}</h3>
+                    <strong>সিরিয়াল আইডি:</strong> #${m.id} | <strong>পদবী:</strong> ${m.role} <br>
                     <strong>ঠিকানা:</strong> ${m.address} <br>
-                    <hr style="border:0; border-top:1px dashed #ccc; margin:5px 0;">
-                    🟢 <strong>মোট পরিশোধিত:</strong> ${m.paidMonths} মাস (${m.totalAmount} ৳) <br>
-                    🔴 <strong>মোট বকেয়া:</strong> ${m.dueMonths} মাস <br>
-                    ⏳ <strong>পেন্ডিং রিকোয়েস্ট:</strong> ${hasPending.length} টি
+                    <div class="stat-banner">
+                        <div class="stat-box m-paid">🟢 আদায়: ${m.paidMonths} মাস (${m.totalAmount} ৳)</div>
+                        <div class="stat-box m-due">🔴 বকেয়া: ${m.dueMonths} মাস</div>
+                    </div>
+                    <p style="margin: 8px 0 0 0; font-size:0.9rem; color:#666;">⏳ যাচাইয়ের অপেক্ষায় রিকোয়েস্ট: ${hasPending.length} টি</p>
                 </div>
             </div>
         `;
-        box.style.display = 'block';
+    }
 
-        // ক্যালেন্ডার রিপোর্ট
-        reportRows.innerHTML = ''; 
+    // ক্যালেন্ডার জেনারেটর কমন ফাংশন
+    function generateYearlyCalendar(m, targetRowId) {
+        const rowsContainer = document.getElementById(targetRowId);
+        rowsContainer.innerHTML = '';
         const yearsToTrack = ["২০২৪", "২০২৫", "২০২৬", "২০২৭", "২০২৮"];
         const approvedRequests = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
 
@@ -604,22 +576,51 @@
                 }
             });
             monthsHtml += `</div>`;
-
             let monthsDueCount = Math.max(0, totalExpectInYear - monthsPaidCount);
 
-            reportRows.innerHTML += `
+            rowsContainer.innerHTML += `
                 <tr>
                     <td><strong>${year}</strong></td>
                     <td>
-                        <span style="color:green; font-weight:bold;">${monthsPaidCount} পেইড</span><br>
-                        <span style="color:${monthsDueCount > 0 ? 'red' : 'green'}; font-weight:bold;">${monthsDueCount} বকেয়া</span>
+                        <span style="color:green; font-weight:600;">${monthsPaidCount} পেইড</span><br>
+                        <span style="color:${monthsDueCount > 0 ? 'red' : 'green'}; font-weight:600;">${monthsDueCount} বকেয়া</span>
                     </td>
                     <td>${monthsHtml}</td>
                 </tr>
             `;
         });
+    }
 
-        reportBox.style.display = 'block';
+    // সংশোধন ২: এডমিন কর্তৃক নির্দিষ্ট সদস্যের সম্পূর্ণ প্রোফাইল বিবরণী দেখা
+    function loadAdminMemberView() {
+        const id = parseInt(document.getElementById('adm-member-select').value);
+        const container = document.getElementById('adm-member-profile-box');
+        
+        if(!id) { container.style.display = 'none'; return; }
+
+        const m = db_members.find(x => x.id === id);
+        if(!m) return;
+
+        container.innerHTML = `
+            ${generateProfileHTML(m, false)}
+            <div style="margin-top:20px;">
+                <h4 style="color:var(--primary); margin-bottom:10px;">📅 সদস্যের কিস্তি ক্যালেন্ডার ভিউ</h4>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr style="background-color: var(--secondary); color:white;">
+                                <th style="width:15%">বছর</th>
+                                <th style="width:25%">অবস্থা</th>
+                                <th style="width:60%">ক্যালেন্ডার</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adm-yearly-rows"></tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+        container.style.display = 'block';
+        generateYearlyCalendar(m, 'adm-yearly-rows');
     }
 
     function uploadProfilePicture(memberId) {
@@ -662,8 +663,14 @@
         if(isNaN(amount) || amount <= 0) { alert("সঠিক জমার পরিমাণ দিন।"); return; }
         if(!receipt) { alert("রসিদ নম্বর বা ট্রানজেকশন আইডি দিন।"); return; }
 
-        const m = db_members.find(x => x.id === id);
+        // সংশোধন ১ এর সুরক্ষা: একই মাসের কিস্তি দুইবার পাঠানো প্রতিরোধ
+        const isDuplicate = db_requests.some(r => r.memberId === id && r.monthYear === (month + " " + year) && r.status !== 'rejected');
+        if(isDuplicate) {
+            alert("দুঃখিত, এই মাসের কিস্তির রিকোয়েস্ট ইতিমধ্যেই ডাটাবেজে পেন্ডিং বা এপ্রুভড অবস্থায় আছে!");
+            return;
+        }
 
+        const m = db_members.find(x => x.id === id);
         const newRequest = {
             id: Date.now(),
             memberId: id,
@@ -701,7 +708,7 @@
                     <button class="action-btn btn-reject" onclick="processRequest(${r.id}, 'rejected')">Reject</button>
                 `;
             } else {
-                actionHtml = `<span style="color:#888;">সম্পন্ন</span>`;
+                actionHtml = `<span style="color:#888; font-weight:600;">সম্পন্ন</span>`;
             }
 
             let statusBadge = r.status === 'pending' ? '<span class="badge badge-pending">পেন্ডিং</span>' : 
@@ -711,10 +718,10 @@
             reqTable.innerHTML += `
                 <tr>
                     <td>${r.date}</td>
-                    <td><strong>${r.memberName}</strong></td>
+                    <td><b>#${r.memberId}</b> - ${r.memberName}</td>
                     <td><span style="color:var(--primary); font-weight:bold;">${r.monthYear || 'মাস উল্লেখ নেই'}</span></td>
-                    <td>${r.amount} ৳</td>
-                    <td><mark>${r.receipt}</mark></td>
+                    <td><b>${r.amount} ৳</b></td>
+                    <td><mark style="padding: 2px 6px; border-radius:4px;">${r.receipt}</mark></td>
                     <td>${statusBadge}</td>
                     <td>${actionHtml}</td>
                 </tr>
