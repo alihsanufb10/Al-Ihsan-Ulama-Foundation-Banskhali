@@ -142,6 +142,25 @@
         }
         .btn-approve { background-color: #388e3c; }
         .btn-reject { background-color: #d32f2f; }
+
+        /* মাসের গ্রিড স্টাইল */
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .month-chip {
+            font-size: 0.75rem;
+            padding: 4px 2px;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+        }
+        .m-paid { background-color: #2e7d32; } /* আদায়কৃত - সবুজ */
+        .m-due { background-color: #c62828; }  /* বকেয়া - লাল */
+        .m-na { background-color: #9e9e9e; color: #fff; }   /* প্রযোজ্য নয় - ধূসর */
     </style>
 </head>
 <body>
@@ -192,8 +211,6 @@
                             <option value="২০২৬">২০২৬</option>
                             <option value="২০২৭">২০২৭</option>
                             <option value="২০২৮">২০২৮</option>
-                            <option value="২০২৯">২০২৯</option>
-                            <option value="২০৩০">২০৩০</option>
                         </select>
                     </div>
                 </div>
@@ -208,7 +225,7 @@
                 <button class="btn-block" onclick="submitInstallment()">রসিদ ও কিস্তি জমা দিন</button>
             </div>
 
-            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং বছর ভিত্তিক রিপোর্ট -->
+            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং বছর ভিত্তিক লাইভ ক্যালেন্ডার রিপোর্ট -->
             <div class="card" style="grid-column: span 2;">
                 <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
                 <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
@@ -217,21 +234,24 @@
                     <!-- ডাইনামিক ডাটা আসবে -->
                 </div>
 
-                <!-- নতুন যুক্ত হওয়া বছর ভিত্তিক রিপোর্টের টেবিল সেকশন -->
+                <!-- বছর ভিত্তিক অ্যাডভান্সড রিপোর্ট টেবিল সেকশন -->
                 <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
-                    <h4 style="margin-bottom: 10px; color: var(--primary);">📅 বছর ভিত্তিক কিস্তির রিপোর্ট</h4>
-                    <table style="margin-top: 5px; font-size: 0.95rem;">
-                        <thead>
-                            <tr style="background-color: var(--secondary);">
-                                <th>বছর</th>
-                                <th>আদায়কৃত মাস</th>
-                                <th>বকেয়া মাস</th>
-                            </tr>
-                        </thead>
-                        <tbody id="yearly-report-rows">
-                            <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাইনামিক ডাটা ঢুকবে -->
-                        </tbody>
-                    </table>
+                    <h4 style="margin-bottom: 5px; color: var(--primary);">📅 বছর ভিত্তিক বিস্তারিত কিস্তির বিবরণ</h4>
+                    <p style="font-size:0.85rem; margin:0 0 10px 0;"><span style="color:#2e7d32;">■ সবুজ = আদায়</span> | <span style="color:#c62828;">■ লাল = বকেয়া</span> | <span style="color:#9e9e9e;">■ ধূসর = শুরু হয়নি</span></p>
+                    <div style="overflow-x: auto;">
+                        <table style="margin-top: 5px; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background-color: var(--secondary);">
+                                    <th style="width: 15%;">বছর</th>
+                                    <th style="width: 20%;">আদায় / বকেয়া</th>
+                                    <th style="width: 65%;">মাস ভিত্তিক লাইভ অবস্থা</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yearly-report-rows">
+                                <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাইনামিক ডাটা ঢুকবে -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,16 +331,16 @@
 <script>
     // ১০ জন সদস্যের প্রোফাইল ডাটা
     const initialMembers = [
-        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 2, name: "বোরহান উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
-        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 }
+        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
     ];
 
     const ADMIN_PASSWORD = "al-ihsan-admin"; 
@@ -329,10 +349,35 @@
     let db_requests = JSON.parse(localStorage.getItem('f_requests')) || [];
     let db_expenses = JSON.parse(localStorage.getItem('f_expenses')) || 0;
 
+    // ১২ মাসের বাংলা নাম তালিকা
+    const allMonths = ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"];
+
     function saveDB() {
         localStorage.setItem('f_members', JSON.stringify(db_members));
         localStorage.setItem('f_requests', JSON.stringify(db_requests));
         localStorage.setItem('f_expenses', JSON.stringify(db_expenses));
+    }
+
+    // গ্লোবাল মেম্বার বকেয়া রি-ক্যালকুলেশন লজিক (২০২৪ সালের সেপ্টেম্বর থেকে শুরু)
+    function recalculateAllMembersSummary() {
+        db_members.forEach(m => {
+            let totalPaid = 0;
+            let totalPaidMonthsCount = 0;
+            
+            const approvedReqs = db_requests.filter(r => r.memberId === m.id && r.status === 'approved');
+            approvedReqs.forEach(r => {
+                totalPaid += r.amount;
+                let calculatedMonths = Math.floor(r.amount / 500) || 1;
+                totalPaidMonthsCount += calculatedMonths;
+            });
+
+            m.totalAmount = totalPaid;
+            m.paidMonths = totalPaidMonthsCount;
+
+            // বকেয়া হিসাব (২০২৪ সালে ৪ মাস, অন্য পূর্ণ বছরগুলোতে ১২ মাস করে)
+            let totalExpectedMonthsToDate = 4 + (12 * 2); // ২০২৪ (৪ মাস) + ২০২৫ (১২) + ২০২৬ (১২) = ২৮ মাস সর্বমোট (২০২৬ সাল পর্যন্ত)
+            m.dueMonths = Math.max(0, totalExpectedMonthsToDate - m.paidMonths);
+        });
     }
 
     function switchTab(tabId) {
@@ -365,6 +410,9 @@
     }
 
     function init() {
+        recalculateAllMembersSummary();
+        saveDB();
+
         const select = document.getElementById('sub-member-id');
         select.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
         db_members.forEach(m => {
@@ -403,7 +451,7 @@
         });
     }
 
-    // সংশোধিত পার্সোনাল স্ট্যাটাস ও বছর ভিত্তিক রিপোর্টিং ফাংশন
+    // অ্যাডভান্সড লাইভ ক্যালেন্ডার রিপোর্টিং ফাংশন
     function loadMemberStatus() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const box = document.getElementById('personal-status-box');
@@ -418,6 +466,7 @@
         }
          
         sessionStorage.setItem('selected_member_id', id);
+        recalculateAllMembersSummary();
         const m = db_members.find(x => x.id === id);
          
         const hasPending = db_requests.filter(r => r.memberId === id && r.status === 'pending');
@@ -426,34 +475,49 @@
             <strong>সদস্যের নাম:</strong> ${m.name} <br>
             <strong>পদবী:</strong> ${m.role} | <strong>ঠিকানা:</strong> ${m.address} <br>
             <hr style="border:0; border-top:1px dashed #ccc;">
-            🟢 <strong>সর্বমোট পরিশোধিত কিস্তি:</strong> ${m.paidMonths} মাস (${m.totalAmount} টাকা) <br>
-            🔴 <strong>সর্বমোট বকেয়া কিস্তি:</strong> ${m.dueMonths} মাস <br>
+            🟢 <strong>মোট পরিশোধিত কিস্তি:</strong> ${m.paidMonths} মাস (${m.totalAmount} টাকা) <br>
+            🔴 <strong>মোট বকেয়া কিস্তি (২০২৪ সেপ্টেম্বর হতে বর্তমান অব্দি):</strong> ${m.dueMonths} মাস <br>
             ⏳ <strong>অনুমোদনের অপেক্ষায় রিকোয়েস্ট:</strong> ${hasPending.length} টি
         `;
 
-        // বছর ভিত্তিক রিপোর্ট ক্যালকুলেশন
+        // লাইভ ক্যালেন্ডার জেনারেট লজিক
         reportRows.innerHTML = ''; 
         const yearsToTrack = ["২০২৪", "২০২৫", "২০২৬", "২০২৭", "২০২৮"];
         const approvedRequests = db_requests.filter(r => r.memberId === id && r.status === 'approved');
 
         yearsToTrack.forEach(year => {
-            let monthsPaidInThisYear = 0;
-            
-            approvedRequests.forEach(r => {
-                if(r.monthYear && r.monthYear.includes(year)) {
-                    let calculatedMonths = Math.floor(r.amount / 500) || 1;
-                    monthsPaidInThisYear += calculatedMonths;
+            let monthsPaidCount = 0;
+            let totalExpectInYear = (year === "২০২৪") ? 4 : 12; // ২০২৪ এ ৪ মাস, বাকি বছরে ১২ মাস
+            let monthsHtml = `<div class="months-grid">`;
+
+            allMonths.forEach((month, index) => {
+                // ২০২৪ সালের জানুয়ারি থেকে আগস্ট পর্যন্ত প্রযোজ্য নয় (m-na)
+                if(year === "২০২৪" && index < 8) {
+                    monthsHtml += `<div class="month-chip m-na">${month}</div>`;
+                } else {
+                    // চেক করা এই মাস ও বছর এপ্রুভড লিস্টে আছে কি না
+                    const isPaid = approvedRequests.some(r => r.monthYear === (month + " " + year));
+                    
+                    if(isPaid) {
+                        monthsPaidCount++;
+                        monthsHtml += `<div class="month-chip m-paid">${month} ✓</div>`;
+                    } else {
+                        monthsHtml += `<div class="month-chip m-due">${month} ✗</div>`;
+                    }
                 }
             });
+            monthsHtml += `</div>`;
 
-            if(monthsPaidInThisYear > 12) monthsPaidInThisYear = 12; 
-            let monthsDueInThisYear = 12 - monthsPaidInThisYear;
+            let monthsDueCount = Math.max(0, totalExpectInYear - monthsPaidCount);
 
             reportRows.innerHTML += `
                 <tr>
                     <td><strong>${year}</strong></td>
-                    <td style="color: green; font-weight: bold;">${monthsPaidInThisYear} মাস</td>
-                    <td style="color: ${monthsDueInThisYear > 0 ? 'red' : 'green'}; font-weight: bold;">${monthsDueInThisYear} মাস</td>
+                    <td>
+                        <span style="color:green; font-weight:bold;">${monthsPaidCount} পেইড</span><br>
+                        <span style="color:${monthsDueCount > 0 ? 'red' : 'green'}; font-weight:bold;">${monthsDueCount} বকেয়া</span>
+                    </td>
+                    <td>${monthsHtml}</td>
                 </tr>
             `;
         });
@@ -469,6 +533,13 @@
         const receipt = document.getElementById('sub-receipt').value.trim();
 
         if(!id) { alert("অনুগ্রহ করে আপনার নাম সিলেক্ট করুন।"); return; }
+        
+        // ২০২৪ সালের প্রথমদিকের মাসের জন্য সতর্কবার্তা
+        if(year === "২০২৪" && ["জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন", "জুলাই", "আগস্ট"].includes(month)) {
+            alert("ফাউন্ডেশন ২০২৪ সালের সেপ্টেম্বর থেকে চালু হয়েছে। এর আগের কোনো মাস সিলেক্ট করা যাবে না।");
+            return;
+        }
+        
         if(isNaN(amount) || amount <= 0) { alert("সঠিক জমার পরিমাণ দিন।"); return; }
         if(!receipt) { alert("রসিদ নম্বর বা ট্রানজেকশন আইডি দিন।"); return; }
 
@@ -536,17 +607,8 @@
         const req = db_requests.find(r => r.id === reqId);
         if(!req) return;
 
-        if(status === 'approved') {
-            const member = db_members.find(m => m.id === req.memberId);
-            if(member) {
-                member.totalAmount += req.amount;
-                let monthsCredited = Math.floor(req.amount / 500) || 1; 
-                member.paidMonths += monthsCredited;
-                member.dueMonths = Math.max(0, member.dueMonths - monthsCredited);
-            }
-        }
-
         req.status = status;
+        recalculateAllMembersSummary();
         saveDB();
         alert(status === 'approved' ? "কিস্তি সফলভাবে এপ্রুভ করা হয়েছে!" : "কিস্তি বাতিল করা হয়েছে।");
         
