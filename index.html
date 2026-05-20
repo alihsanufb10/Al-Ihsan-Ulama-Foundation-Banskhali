@@ -153,7 +153,7 @@
         <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
     </div>
 
-    <!-- নেভিগেশন ট্যাব (সদস্য ও এডমিনদের আলাদা ভিউর জন্য) -->
+    <!-- নেভিগেশন ট্যাব -->
     <div class="nav-tabs">
         <button id="btn-member-tab" class="tab-btn active" onclick="switchTab('member-view')">👤 সদস্য প্যানেল</button>
         <button id="btn-admin-tab" class="tab-btn" onclick="switchTab('admin-view')">🔑 এডমিন প্যানেল</button>
@@ -208,39 +208,30 @@
                 <button class="btn-block" onclick="submitInstallment()">রসিদ ও কিস্তি জমা দিন</button>
             </div>
 
-            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড -->
+            <!-- ব্যক্তিগত কিস্তির ট্র্যাক রেকর্ড এবং বছর ভিত্তিক রিপোর্ট -->
             <div class="card" style="grid-column: span 2;">
-                <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3> <!-- আপনার ফাইলের এই অংশটুকু খুঁজে নিন -->
-<div class="card" style="grid-column: span 2;">
-    <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
-    <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
-    <div id="personal-status-box" style="line-height: 1.8;">
-        <!-- ডাইনামিক ডাটা আসবে -->
-    </div>
-
-    <!-- 🔽 ঠিক এই নিচের কোডটুকু নতুন যুক্ত করুন 🔽 -->
-    <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
-        <h4 style="margin-bottom: 10px; color: var(--primary);">📅 বছর ভিত্তিক কিস্তির রিপোর্ট</h4>
-        <table style="margin-top: 5px; font-size: 0.95rem;">
-            <thead>
-                <tr style="background-color: var(--secondary);">
-                    <th>বছর</th>
-                    <th>আদায়কৃত মাস</th>
-                    <th>বকেয়া মাস</th>
-                </tr>
-            </thead>
-            <tbody id="yearly-report-rows">
-                <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাটা ঢুকবে -->
-            </tbody>
-        </table>
-    </div>
-    <!-- 🔼 নতুন কোড যুক্ত করা শেষ 🔼 -->
-
-</div>
-
+                <h3>📊 আপনার কিস্তির বর্তমান অবস্থা</h3>
                 <p style="color: #666;">নাম সিলেক্ট করলে আপনার বিস্তারিত প্রোফাইল ও কিস্তির হিসাব এখানে দেখাবে।</p>
+                
                 <div id="personal-status-box" style="line-height: 1.8;">
                     <!-- ডাইনামিক ডাটা আসবে -->
+                </div>
+
+                <!-- নতুন যুক্ত হওয়া বছর ভিত্তিক রিপোর্টের টেবিল সেকশন -->
+                <div id="personal-yearly-report" style="margin-top: 20px; display: none;">
+                    <h4 style="margin-bottom: 10px; color: var(--primary);">📅 বছর ভিত্তিক কিস্তির রিপোর্ট</h4>
+                    <table style="margin-top: 5px; font-size: 0.95rem;">
+                        <thead>
+                            <tr style="background-color: var(--secondary);">
+                                <th>বছর</th>
+                                <th>আদায়কৃত মাস</th>
+                                <th>বকেয়া মাস</th>
+                            </tr>
+                        </thead>
+                        <tbody id="yearly-report-rows">
+                            <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডাইনামিক ডাটা ঢুকবে -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -274,7 +265,7 @@
             </div>
         </div>
 
-        <!-- মূল এডমিন ড্যাশবোর্ড (লগইন এর পর দেখাবে) -->
+        <!-- মূল এডমিন ড্যাশবোর্ড -->
         <div id="admin-content" style="display: none;">
             <div class="grid-3">
                 <div class="card" style="background-color: #e8f5e9;">
@@ -318,7 +309,7 @@
 </div>
 
 <script>
-    // ১০ জন সদস্যের স্থায়ী প্রোফাইল ডাটা (নাম, পদবী, ঠিকানা)
+    // ১০ জন সদস্যের প্রোফাইল ডাটা
     const initialMembers = [
         { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
         { id: 2, name: "বোরহান উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 },
@@ -332,9 +323,8 @@
         { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", paidMonths: 0, dueMonths: 12, totalAmount: 0 }
     ];
 
-    const ADMIN_PASSWORD = "287426"; // আপনার সিক্রেট পাসওয়ার্ড
+    const ADMIN_PASSWORD = "al-ihsan-admin"; 
      
-    // ডাটাবেজ ব্যাকআপ (লোকাল স্টোরেজ লাইভ ডেমো)
     let db_members = JSON.parse(localStorage.getItem('f_members')) || initialMembers;
     let db_requests = JSON.parse(localStorage.getItem('f_requests')) || [];
     let db_expenses = JSON.parse(localStorage.getItem('f_expenses')) || 0;
@@ -345,7 +335,6 @@
         localStorage.setItem('f_expenses', JSON.stringify(db_expenses));
     }
 
-    // ট্যাব পরিবর্তন
     function switchTab(tabId) {
         document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -359,7 +348,6 @@
         }
     }
 
-    // এডমিন ভেরিফিকেশন
     function verifyAdmin() {
         const pass = document.getElementById('admin-pass').value;
         if(pass === ADMIN_PASSWORD) {
@@ -376,7 +364,6 @@
         renderAdminDashboard();
     }
 
-    // ড্রপডাউন ও পেজ ইনিশিয়ালাইজেশন
     function init() {
         const select = document.getElementById('sub-member-id');
         select.innerHTML = '<option value="">-- সদস্য নির্বাচন করুন --</option>';
@@ -384,7 +371,6 @@
             select.innerHTML += `<option value="${m.id}">${m.name} (${m.role})</option>`;
         });
         
-        // সেভ করা মেম্বার আইডি রি-লোড করা
         const savedMemberId = sessionStorage.getItem('selected_member_id');
         if(savedMemberId) {
             select.value = savedMemberId;
@@ -393,7 +379,6 @@
 
         renderPublicTable();
 
-        // এডমিন লগইন সেশন একটিভ থাকলে ধরে রাখা
         if(sessionStorage.getItem('admin_session') === 'true') {
             showAdminDashboard();
             if(sessionStorage.getItem('admin_logged_in_view') === 'true') {
@@ -402,7 +387,6 @@
         }
     }
 
-    // পাবলিক টেবিল ভিউ
     function renderPublicTable() {
         const tbody = document.getElementById('public-members-table');
         tbody.innerHTML = '';
@@ -419,29 +403,64 @@
         });
     }
 
-    // ব্যক্তিগত কিস্তির লাইভ স্ট্যাটাস লোড
+    // সংশোধিত পার্সোনাল স্ট্যাটাস ও বছর ভিত্তিক রিপোর্টিং ফাংশন
     function loadMemberStatus() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const box = document.getElementById('personal-status-box');
-        if(!id) { box.innerHTML = ''; sessionStorage.removeItem('selected_member_id'); return; }
+        const reportBox = document.getElementById('personal-yearly-report');
+        const reportRows = document.getElementById('yearly-report-rows');
+        
+        if(!id) { 
+            box.innerHTML = ''; 
+            reportBox.style.display = 'none';
+            sessionStorage.removeItem('selected_member_id'); 
+            return; 
+        }
          
         sessionStorage.setItem('selected_member_id', id);
         const m = db_members.find(x => x.id === id);
          
-        // পেন্ডিং কোনো রিকোয়েস্ট আছে কি না চেক করা
         const hasPending = db_requests.filter(r => r.memberId === id && r.status === 'pending');
 
         box.innerHTML = `
             <strong>সদস্যের নাম:</strong> ${m.name} <br>
             <strong>পদবী:</strong> ${m.role} | <strong>ঠিকানা:</strong> ${m.address} <br>
             <hr style="border:0; border-top:1px dashed #ccc;">
-            🟢 <strong>মোট পরিশোধিত কিস্তি:</strong> ${m.paidMonths} মাস (${m.totalAmount} টাকা) <br>
-            🔴 <strong>মোট বকেয়া কিস্তি:</strong> ${m.dueMonths} মাস <br>
+            🟢 <strong>সর্বমোট পরিশোধিত কিস্তি:</strong> ${m.paidMonths} মাস (${m.totalAmount} টাকা) <br>
+            🔴 <strong>সর্বমোট বকেয়া কিস্তি:</strong> ${m.dueMonths} মাস <br>
             ⏳ <strong>অনুমোদনের অপেক্ষায় রিকোয়েস্ট:</strong> ${hasPending.length} টি
         `;
+
+        // বছর ভিত্তিক রিপোর্ট ক্যালকুলেশন
+        reportRows.innerHTML = ''; 
+        const yearsToTrack = ["২০২৪", "২০২৫", "২০২৬", "২০২৭", "২০২৮"];
+        const approvedRequests = db_requests.filter(r => r.memberId === id && r.status === 'approved');
+
+        yearsToTrack.forEach(year => {
+            let monthsPaidInThisYear = 0;
+            
+            approvedRequests.forEach(r => {
+                if(r.monthYear && r.monthYear.includes(year)) {
+                    let calculatedMonths = Math.floor(r.amount / 500) || 1;
+                    monthsPaidInThisYear += calculatedMonths;
+                }
+            });
+
+            if(monthsPaidInThisYear > 12) monthsPaidInThisYear = 12; 
+            let monthsDueInThisYear = 12 - monthsPaidInThisYear;
+
+            reportRows.innerHTML += `
+                <tr>
+                    <td><strong>${year}</strong></td>
+                    <td style="color: green; font-weight: bold;">${monthsPaidInThisYear} মাস</td>
+                    <td style="color: ${monthsDueInThisYear > 0 ? 'red' : 'green'}; font-weight: bold;">${monthsDueInThisYear} মাস</td>
+                </tr>
+            `;
+        });
+
+        reportBox.style.display = 'block';
     }
 
-    // সদস্য কর্তৃক কিস্তির রসিদ সাবমিট
     function submitInstallment() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const month = document.getElementById('sub-month').value;
@@ -459,7 +478,7 @@
             id: Date.now(),
             memberId: id,
             memberName: m.name,
-            monthYear: month + " " + year, // মাস ও সাল সংরক্ষণ
+            monthYear: month + " " + year, 
             amount: amount,
             receipt: receipt,
             date: new Date().toLocaleDateString('bn-BD'),
@@ -469,14 +488,10 @@
         db_requests.push(newRequest);
         saveDB();
         alert("আপনার " + month + " " + year + " মাসের কিস্তির রসিদ সফলভাবে এডমিনের কাছে পাঠানো হয়েছে।");
-        
-        // রিলোড করার কোড
         location.reload();
     }
 
-    // এডমিন ড্যাশবোর্ড রেন্ডার
     function renderAdminDashboard() {
-        // মোট তহবিল হিসাব
         let totalIncome = db_members.reduce((sum, m) => sum + m.totalAmount, 0);
         let currentFund = totalIncome - db_expenses;
          
@@ -485,11 +500,9 @@
         let pendingRequests = db_requests.filter(r => r.status === 'pending');
         document.getElementById('adm-pending-count').textContent = pendingRequests.length + " টি";
 
-        // রিকোয়েস্ট টেবিল জেনারেট
         const reqTable = document.getElementById('admin-requests-table');
         reqTable.innerHTML = '';
          
-        // সব রিকোয়েস্ট দেখাবে (নতুনগুলো আগে)
         [...db_requests].reverse().forEach(r => {
             let actionHtml = '';
             if(r.status === 'pending') {
@@ -519,7 +532,6 @@
         });
     }
 
-    // এডমিন কর্তৃক রিকোয়েস্ট অনুমোদন বা বাতিল প্রসেস
     function processRequest(reqId, status) {
         const req = db_requests.find(r => r.id === reqId);
         if(!req) return;
@@ -528,7 +540,6 @@
             const member = db_members.find(m => m.id === req.memberId);
             if(member) {
                 member.totalAmount += req.amount;
-                // ধরুন প্রতি ৫০০ টাকায় ১ মাসের কিস্তি হিসাব করা হয়
                 let monthsCredited = Math.floor(req.amount / 500) || 1; 
                 member.paidMonths += monthsCredited;
                 member.dueMonths = Math.max(0, member.dueMonths - monthsCredited);
@@ -539,12 +550,10 @@
         saveDB();
         alert(status === 'approved' ? "কিস্তি সফলভাবে এপ্রুভ করা হয়েছে!" : "কিস্তি বাতিল করা হয়েছে।");
         
-        // এডমিন ভিউ ধরে রেখে রিফ্রেশ করার কোড
         sessionStorage.setItem('admin_logged_in_view', 'true');
         location.reload();
     }
 
-    // খরচ যুক্ত করা
     function addExpense() {
         const title = document.getElementById('exp-title').value.trim();
         const amount = parseFloat(document.getElementById('exp-amount').value);
@@ -554,7 +563,6 @@
         saveDB();
         alert("খরচ রেকর্ড করা হয়েছে।");
         
-        // এডমিন ভিউ ধরে রেখে রিফ্রেশ করার কোড
         sessionStorage.setItem('admin_logged_in_view', 'true');
         location.reload();
     }
