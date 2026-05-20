@@ -211,7 +211,7 @@
     <!-- ব্যানার হেডার -->
     <div class="header">
         <h1>🕌 আল ইহসান উলামা ফাউন্ডেশন বাঁশখালী</h1>
-        <p>সদস্য কিস্তি ও केंद्रीय তহবিল ব্যবস্থাপনা সিস্টেম</p>
+        <p>সদস্য কিস্তি ও কেন্দ্রীয় তহবিল ব্যবস্থাপনা সিস্টেম</p>
     </div>
 
     <!-- নেভিগেশন ট্যাব -->
@@ -231,9 +231,9 @@
                     <select id="sub-member-id" onchange="handleMemberSelection()"></select>
                 </div>
                 
-                <!-- গোপন পিন ভেরিফিকেশন সেকশন (সবার জন্য ১১১১) -->
+                <!-- গোপন পিন ভেরিফিকেশন সেকশন (গোপন রাখা হয়েছে) -->
                 <div id="pin-auth-box" class="form-group" style="display: none; background: #ffe082; padding: 10px; border-radius: 5px;">
-                    <label style="color: #b78103;">🔐 গোপন পিন কোড দিন (১১১১):</label>
+                    <label style="color: #b78103;">🔐 আপনার ৪ ডিজিটের গোপন পিন দিন:</label>
                     <div style="display: flex; gap: 5px;">
                         <input type="password" id="sub-member-pin" placeholder="পিন কোড লিখুন" maxlength="4">
                         <button onclick="verifyMemberPin()" style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">আনলক</button>
@@ -285,7 +285,7 @@
                 <h3>📊 আপনার প্রোফাইল ও কিস্তির বর্তমান অবস্থা</h3>
                 
                 <div id="personal-status-blank" style="color: #666;">
-                    নাম সিলেক্ট করে পিন '1111' দেওয়ার পর আপনার ছবিসহ বিস্তারিত প্রোফাইল ও কিস্তির লাইভ হিসাব এখানে খুলে যাবে।
+                    নাম সিলেক্ট করে এডমিন কর্তৃক প্রদত্ত সঠিক গোপন পিন দেওয়ার পর ছবিসহ আপনার বিস্তারিত প্রোফাইল ও কিস্তির লাইভ হিসাব এখানে খুলে যাবে।
                 </div>
                 
                 <div id="personal-status-box" style="display: none;">
@@ -386,27 +386,26 @@
 </div>
 
 <script>
-    // ১০ জন সদস্যের প্রোফাইল ডাটা (সবার জন্য কমন পিন 1111 এবং ডাইনামিক ছবির অপশন যুক্ত)
+    // ১০ জন সদস্যের প্রোফাইল ডাটা এবং আপনার নির্ধারিত ২০+০১ ফরম্যাটের পিন স্ট্রাকচার
     const initialMembers = [
-        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
-        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
+        { id: 1, name: "রেজাউল করিম", role: "সভাপতি", address: "পশ্চিম বড়ঘোনা", pin: "2001", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 2, name: "বোরهان উদ্দীন", role: "সাধারণ সম্পাদক", address: "পুর্ব বড়ঘোনা", pin: "2002", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 3, name: "গিয়াস উদ্দীন", role: "কোষাধ্যক্ষ", address: "পশ্চিম বড়ঘোনা", pin: "2003", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 4, name: "মোহাম্মদ সিকান্দর", role: "প্রচার ও প্রকাশনা সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "2004", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 5, name: "সরওয়ার কামাল", role: "দপ্তর সম্পাদক", address: "পশ্চিম বড়ঘোনা", pin: "2005", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 6, name: "আবু ছালেহ", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "2006", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 7, name: "হা: আলমগীর", role: "সদস্য", address: "পুর্ব বড়ঘোনা", pin: "2007", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 8, name: "ফখরুদ্দীন", role: "সদস্য", address: "দক্ষিণ গন্ডামারা", pin: "2008", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 9, name: "রুহুল কাদের", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "2009", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 },
+        { id: 10, name: "মোহাম্মদ আলী মোস্তাকিম", role: "সদস্য", address: "পশ্চিম বড়ঘোনা", pin: "2010", image: "", paidMonths: 0, dueMonths: 0, totalAmount: 0 }
     ];
 
     const ADMIN_PASSWORD = "287426"; 
-    const COMMON_MEMBER_PIN = "1111"; // 👈 সবার জন্য সমান পিন কোড
      
     let db_members = JSON.parse(localStorage.getItem('f_members'));
     
-    // যদি লোকালস্টোরেজে ডাটা না থাকে বা পুরনো ডাটাতে পিন লক ক্র্যাশ করে, তবে জোরপূর্বক রিসেট করবে
-    if(!db_members || !db_members[0].hasOwnProperty('image')) {
+    // ব্রাউজারে পুরনো বা কমন পিন সেভ থাকলে তা পরিবর্তন করে নতুন ২০০১-২০১০ পিন সেট করার অটোমেটিক ফিল্টার
+    if(!db_members || !db_members[0].hasOwnProperty('pin') || db_members[0].pin === "1111" || db_members[0].pin === "1234") {
         db_members = initialMembers;
         localStorage.setItem('f_members', JSON.stringify(db_members));
     }
@@ -527,7 +526,7 @@
         }
     }
 
-    // পিন যাচাই (১১১১ সবার জন্য)
+    // ব্যক্তিগত সিক্রেট পিন যাচাইকরণ ফাংশন (২০০১ থেকে ২০১০)
     function verifyMemberPin() {
         const id = parseInt(document.getElementById('sub-member-id').value);
         const inputPin = document.getElementById('sub-member-pin').value.trim();
@@ -535,17 +534,16 @@
 
         if(!m) return;
 
-        if(inputPin === COMMON_MEMBER_PIN) {
+        if(inputPin === m.pin) {
             document.getElementById('pin-auth-box').style.display = 'none';
             document.getElementById('installment-form-content').style.display = 'block';
             loadMemberStatus(m);
         } else {
-            alert("ভুল পিন কোড! দয়া করে সঠিক পিন '1111' ব্যবহার করুন।");
+            alert("ভুল গোপন পিন কোড! আপনি অন্য সদস্যের তথ্য দেখতে পারবেন না।");
             document.getElementById('sub-member-pin').value = '';
         }
     }
 
-    // ছবিসহ লাইভ মেম্বার প্রোফাইল ও রিপোর্ট জেনারেশন
     function loadMemberStatus(m) {
         const box = document.getElementById('personal-status-box');
         const statusBlank = document.getElementById('personal-status-blank');
@@ -555,7 +553,7 @@
         statusBlank.style.display = 'none';
         const hasPending = db_requests.filter(r => r.memberId === m.id && r.status === 'pending');
 
-        // ডিফল্ট প্রোফাইল ছবি নির্ধারণ (যদি আপলোড না থাকে তবে ইসলামিক মনোগ্রাম বা একটি আইকন দেখাবে)
+        // ডিফল্ট অ্যাভাটার আইকন
         const currentAvatar = m.image ? m.image : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231b5e20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>';
 
         box.innerHTML = `
@@ -565,7 +563,7 @@
                         <img id="avatar-preview" src="${currentAvatar}" alt="Profile Picture">
                     </div>
                     <label class="file-upload-btn">
-                        📷 ছবি পরিবর্তন
+                        📷 ছবি আপলোড/পরিবর্তন
                         <input type="file" id="profile-image-input" accept="image/*" style="display:none;" onchange="uploadProfilePicture(${m.id})">
                     </label>
                 </div>
@@ -624,13 +622,11 @@
         reportBox.style.display = 'block';
     }
 
-    // ছবি আপলোড লজিক (Base64 ফরমেটে লোকালস্টোরেজে সেভ হবে)
     function uploadProfilePicture(memberId) {
         const fileInput = document.getElementById('profile-image-input');
         const file = fileInput.files[0];
         if(!file) return;
 
-        // ছবির সাইজ সর্বোচ্চ ১ মেগাবাইট কন্ট্রোল (লোকালস্টোরেজ মেমোরি বাঁচানোর জন্য)
         if(file.size > 1024 * 1024) {
             alert("ছবিটি অনেক বড়! দয়া করে ১ মেগাবাইটের কম সাইজের ছবি আপলোড করুন।");
             return;
@@ -640,7 +636,7 @@
         reader.onloadend = function() {
             const member = db_members.find(m => m.id === memberId);
             if(member) {
-                member.image = reader.result; // চিত্রটি সেভ হচ্ছে
+                member.image = reader.result; 
                 saveDB();
                 document.getElementById('avatar-preview').src = reader.result;
                 alert("আপনার প্রোফাইল ছবি সফলভাবে সেট হয়েছে!");
